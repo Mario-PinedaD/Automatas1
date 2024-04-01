@@ -1,0 +1,12 @@
+Puntos de ayuda
+1.- Los tokens no se separan por puntos.
+Es decir: debemos leer caracter por caracter, es decir, por ejemplo "i = a + b * c; " nos debería devolver los tokens de
+
+para los strings por ejemplo, tambien debemos considerar las comillas
+
+El analizador estará basado en el sistema de Javascript:
+Palabras reservadas:
+
+await,break,case,catch,class,const,continue,debugger,default,delete,do,else,enum,export,extends,finally,for,function,if,implements
+,import,in,instanceof,interface,let,new,package,private,protected,public,return,static,super,switch,this,throw,try,typeof,var        void
+,while      with       yield
