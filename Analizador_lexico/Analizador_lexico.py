@@ -1,26 +1,20 @@
 import re
 
-# Definición de palabras reservadas
+# Definición de palabras reservadas de JavaScript
 palabras_reservadas = {
-    'auto', 'break', 'case', 'char', 'const', 'continue', 'default', 'do',
-    'double', 'else', 'enum', 'extern', 'float', 'for', 'goto', 'if', 'int',
-    'long', 'register', 'return', 'short', 'signed', 'sizeof', 'static',
-    'struct', 'switch', 'typedef', 'union', 'unsigned', 'void', 'volatile',
-    'while'
+    'await', 'break', 'case', 'catch', 'class', 'const', 'continue', 'debugger',
+    'default', 'delete', 'do', 'else', 'enum', 'export', 'extends', 'finally',
+    'for', 'function', 'if', 'implements', 'import', 'in', 'instanceof', 'interface',
+    'let', 'new', 'package', 'private', 'protected', 'public', 'return', 'static',
+    'super', 'switch', 'this', 'throw', 'try', 'typeof', 'var', 'void', 'while', 'with', 'yield'
 }
 
-# Definición de tokens con expresiones regulares
+# Definición de tokens con expresiones regulares para JavaScript
 tokens_regex = {
-    'IDENTIFICADOR': r'[a-zA-Z_][a-zA-Z0-9_]*',
-    'NUMERO_ENTERO': r'\b\d+\b',
-    'NUMERO_FLOTANTE': r'\b\d+\.\d+\b',
+    'IDENTIFICADOR': r'[a-zA-Z_]\w*',
+    'NUMERO': r'\b\d+(\.\d+)?\b',
     'OPERADOR': r'[-+*/%&|=<>!^~?:]',
-    'PARENTESIS_IZQUIERDO': r'\(',
-    'PARENTESIS_DERECHO': r'\)',
-    'LLAVE_IZQUIERDA': r'\{',
-    'LLAVE_DERECHA': r'\}',
-    'CORCHETE_IZQUIERDO': r'\[',
-    'CORCHETE_DERECHO': r'\]',
+    'PARENTESIS': r'[()\[\]{}]',
     'PUNTO_Y_COMA': r';',
     'COMA': r',',
     'PUNTO': r'\.',
@@ -29,25 +23,11 @@ tokens_regex = {
     'ASIGNACION': r'=',
     'INCREMENTO': r'\+\+',
     'DECREMENTO': r'--',
-    'MAYOR_QUE': r'>',
-    'MENOR_QUE': r'<',
-    'MAYOR_IGUAL_QUE': r'>=',
-    'MENOR_IGUAL_QUE': r'<=',
-    'IGUAL_QUE': r'==',
-    'DIFERENTE_DE': r'!=',
-    'AND_LOGICO': r'&&',
-    'OR_LOGICO': r'\|\|',
-    'NOT_LOGICO': r'!',
-    'AND_BIT_A_BIT': r'&',
-    'OR_BIT_A_BIT': r'\|',
-    'XOR_BIT_A_BIT': r'\^',
-    'NOT_BIT_A_BIT': r'~',
-    'SHIFT_IZQUIERDA': r'<<',
-    'SHIFT_DERECHA': r'>>',
     'COMENTARIO_UNA_LINEA': r'//.*?$',
     'COMENTARIO_MULTI_LINEA': r'/\*.*?\*/',
     'ESPACIO': r'\s+'
 }
+
 
 def lexer(codigo):
     tokens = []  # Lista para almacenar los tokens encontrados
@@ -80,9 +60,11 @@ def lexer(codigo):
 
 # Ejemplo de uso
 codigo = """
-int main() {
-    printf("Hola Mundo!");
-    return 0;
+let x = 10;
+if (x === 10) {
+    console.log("El valor de x es 10");
+} else {
+    console.log("El valor de x no es 10");
 }
 """
 

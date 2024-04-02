@@ -10,3 +10,43 @@ Palabras reservadas:
 await,break,case,catch,class,const,continue,debugger,default,delete,do,else,enum,export,extends,finally,for,function,if,implements
 ,import,in,instanceof,interface,let,new,package,private,protected,public,return,static,super,switch,this,throw,try,typeof,var        void
 ,while      with       yield
+
+
+# tokens_regex = {
+#     'IDENTIFICADOR': r'[a-zA-Z_][a-zA-Z0-9_]*',
+#     'NUMERO_ENTERO': r'\b\d+\b',
+#     'NUMERO_FLOTANTE': r'\b\d+\.\d+\b',
+#     'OPERADOR': r'[-+*/%&|=<>!^~?:]',
+#     'PARENTESIS_IZQUIERDO': r'\(',
+#     'PARENTESIS_DERECHO': r'\)',
+#     'LLAVE_IZQUIERDA': r'\{',
+#     'LLAVE_DERECHA': r'\}',
+#     'CORCHETE_IZQUIERDO': r'\[',
+#     'CORCHETE_DERECHO': r'\]',
+#     'PUNTO_Y_COMA': r';',
+#     'COMA': r',',
+#     'PUNTO': r'\.',
+#     'COMILLA_SIMPLE': r'\'',
+#     'COMILLA_DOBLE': r'\"',
+#     'ASIGNACION': r'=',
+#     'INCREMENTO': r'\+\+',
+#     'DECREMENTO': r'--',
+#     'MAYOR_QUE': r'>',
+#     'MENOR_QUE': r'<',
+#     'MAYOR_IGUAL_QUE': r'>=',
+#     'MENOR_IGUAL_QUE': r'<=',
+#     'IGUAL_QUE': r'==',
+#     'DIFERENTE_DE': r'!=',
+#     'AND_LOGICO': r'&&',
+#     'OR_LOGICO': r'\|\|',
+#     'NOT_LOGICO': r'!',
+#     'AND_BIT_A_BIT': r'&',
+#     'OR_BIT_A_BIT': r'\|',
+#     'XOR_BIT_A_BIT': r'\^',
+#     'NOT_BIT_A_BIT': r'~',
+#     'SHIFT_IZQUIERDA': r'<<',
+#     'SHIFT_DERECHA': r'>>',
+#     'COMENTARIO_UNA_LINEA': r'//.*?$',
+#     'COMENTARIO_MULTI_LINEA': r'/\*.*?\*/',
+#     'ESPACIO': r'\s+'
+# }
