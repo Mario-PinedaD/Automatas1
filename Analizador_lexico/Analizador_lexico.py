@@ -29,7 +29,7 @@ tokens_regex = {
 }
 
 
-def lexer(codigo):
+def analizador_lexico(codigo):
     tokens = []  # Lista para almacenar los tokens encontrados
     posicion = 0  # Posición actual en el código
 
@@ -54,7 +54,7 @@ def lexer(codigo):
 
         if not coincidencia:
             # Si no hay coincidencia, significa que hay un carácter inesperado
-            raise SyntaxError(f"Error léxico: carácter inesperado '{codigo[0]}' en la posición {posicion}")
+            print("El parametro introducido no está dentro del lenguaje especificado")
 
     return tokens
 
@@ -66,9 +66,46 @@ if (x === 10) {
 } else {
     console.log("El valor de x no es 10");
 }
+#Esto es una prueba
+print("Hola Mundo!")
+for i in range(5):
+    print(i)
 """
 
-tokens_encontrados = lexer(codigo)
+codigo2 = """
+// Operación de suma
+function suma(a, b) {
+    return a + b;
+}
+
+// Operación de resta
+function resta(a, b) {
+    return a - b;
+}
+
+// Operación de multiplicación
+function multiplicacion(a, b) {
+    return a * b;
+}
+
+// Operación de división
+function division(a, b) {
+    if (b !== 0) {
+        return a / b;
+    } else {
+        return "No se puede dividir entre cero";
+    }
+}
+
+// Ejemplos de uso
+console.log("Suma: " + suma(5, 3));
+console.log("Resta: " + resta(5, 3));
+console.log("Multiplicación: " + multiplicacion(5, 3));
+console.log("División: " + division(5, 3));
+console.log("División por cero: " + division(5, 0));
+
+"""
+tokens_encontrados = analizador_lexico(codigo)
 for token in tokens_encontrados:
     print(token)
 
