@@ -1,111 +1,107 @@
-import re
+import argparse
+import ply.lex as lex
 
-# Definición de palabras reservadas de JavaScript
-palabras_reservadas = {
-    'await', 'break', 'case', 'catch', 'class', 'const', 'continue', 'debugger',
-    'default', 'delete', 'do', 'else', 'enum', 'export', 'extends', 'finally',
-    'for', 'function', 'if', 'implements', 'import', 'in', 'instanceof', 'interface',
-    'let', 'new', 'package', 'private', 'protected', 'public', 'return', 'static',
-    'super', 'switch', 'this', 'throw', 'try', 'typeof', 'var', 'void', 'while', 'with', 'yield'
-}
+reserved = ['if', 'then', 'function', 'and', 'elseif', 'nil', 'return', 'while', 'break', 'end', 'not', 'do',
+            'false', 'in', 'true', 'else', 'for', 'local', 'repeat', 'until', 'type', 'print', 'require', 'or',
+            'table']
 
-# Definición de tokens con expresiones regulares para JavaScript
-tokens_regex = {
-    'IDENTIFICADOR': r'[a-zA-Z_]\w*',
-    'NUMERO': r'\b\d+(\.\d+)?\b',
-    'OPERADOR': r'[-+*/%&|=<>!^~?:]',
-    'PARENTESIS': r'[()\[\]{}]',
-    'PUNTO_Y_COMA': r';',
-    'COMA': r',',
-    'PUNTO': r'\.',
-    'COMILLA_SIMPLE': r'\'',
-    'COMILLA_DOBLE': r'\"',
-    'ASIGNACION': r'=',
-    'INCREMENTO': r'\+\+',
-    'DECREMENTO': r'--',
-    'COMENTARIO_UNA_LINEA': r'//.*?$',
-    'COMENTARIO_MULTI_LINEA': r'/\*.*?\*/',
-    'ESPACIO': r'\s+'
-}
+tokens = (
+    'INT',
+    'PARENTESIS_IZQ',
+    'PARENTESIS_DER',
+    'FLOAT',
+    'STRING',
+    'IDENTIFIER',
+    'RESERVED',
+    'CORCHETE_DER',
+    'CORCHETE_IZQ',
+    'LLAVE_IZQ',
+    'LLAVE_DER',
+    'OPERATOR',
+    'COMA'
+)
+
+t_CORCHETE_DER = r'\]'
+t_CORCHETE_IZQ = r'\['
+t_LLAVE_IZQ = r'\{'
+t_LLAVE_DER = r'\}'
+t_PARENTESIS_IZQ = r'\('
+t_PARENTESIS_DER = r'\)'
+t_COMA = r'\,'
 
 
-def analizador_lexico(codigo):
-    tokens = []  # Lista para almacenar los tokens encontrados
-    posicion = 0  # Posición actual en el código
+def t_OPERATOR(t):
+    r'[+\-*/=><~#%^\.:]'
+    t.type = 'OPERATOR'
+    return t
 
-    while codigo:
-        codigo = codigo.lstrip()  # Eliminar espacios en blanco al principio
-        if not codigo:
-            break  # Salir si no hay más código después de los espacios en blanco
 
-        coincidencia = None
-        for tipo_token, patron in tokens_regex.items():
-            regex = re.compile(patron)
-            coincidencia = regex.match(codigo)
-            if coincidencia:
-                valor = coincidencia.group(0)
-                if tipo_token == 'IDENTIFICADOR' and valor in palabras_reservadas:
-                    tipo_token = 'PALABRA_RESERVADA'  # Cambiar el tipo a 'PALABRA_RESERVADA' si el identificador es una palabra reservada
-                # Agregar el token a la lista con su tipo, valor y posición inicial y final
-                tokens.append((tipo_token, valor, posicion + coincidencia.start(), posicion + coincidencia.end() - 1))
-                posicion += coincidencia.end()  # Actualizar la posición para el próximo análisis
-                codigo = codigo[coincidencia.end():]  # Actualizar el código restante
-                break
+def t_IDENTIFIER(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    if t.value.lower() in reserved:
+        t.type = 'RESERVED'
+    else:
+        t.type = 'IDENTIFIER'
+    return t
 
-        if not coincidencia:
-            # Si no hay coincidencia, significa que hay un carácter inesperado
-            print("El parametro introducido no está dentro del lenguaje especificado")
 
-    return tokens
+def t_STRING(t):
+    r'\"([^\"\n]*?)(?<!\\)\"|\'([^\'\n]*?)(?<!\\)\'|"""([^"]*?)"""'
+    t.value = t.value.strip('"').strip("'")
+    return t
 
-# Ejemplo de uso
-codigo = """
-let x = 10;
-if (x === 10) {
-    console.log("El valor de x es 10");
-} else {
-    console.log("El valor de x no es 10");
-}
-#Esto es una prueba
-print("Hola Mundo!")
-for i in range(5):
-    print(i)
-"""
 
-codigo2 = """
-// Operación de suma
-function suma(a, b) {
-    return a + b;
-}
+def t_FLOAT(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
+    return t
 
-// Operación de resta
-function resta(a, b) {
-    return a - b;
-}
 
-// Operación de multiplicación
-function multiplicacion(a, b) {
-    return a * b;
-}
+def t_INT(t):
+    r'\d+(?![\.\d])'
+    t.value = int(t.value)
+    return t
 
-// Operación de división
-function division(a, b) {
-    if (b !== 0) {
-        return a / b;
-    } else {
-        return "No se puede dividir entre cero";
-    }
-}
 
-// Ejemplos de uso
-console.log("Suma: " + suma(5, 3));
-console.log("Resta: " + resta(5, 3));
-console.log("Multiplicación: " + multiplicacion(5, 3));
-console.log("División: " + division(5, 3));
-console.log("División por cero: " + division(5, 0));
+def t_linea(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
-"""
-tokens_encontrados = analizador_lexico(codigo)
-for token in tokens_encontrados:
-    print(token)
 
+t_ignore = ' \t'
+
+
+def t_error(t):
+    print("Caracter invalido '%s'" % t.value[0] + ", in line: " + str(t.lexer.lineno))
+    t.lexer.skip(1)
+    raise Exception("Error lexicografico.\n Por favor remueva el caracter invalido e intentelo de nuevo.\n Caracter invalido '%s'" % t.value[0] + ", en la linea: " + str(t.lexer.lineno))
+
+
+def lexer_action(data):
+    token_list = []
+    lexer = lex.lex()
+    lexer.input(data)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        token_list.append((tok.type, tok.value, tok.lineno))
+    return token_list
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Analizador léxico')
+    parser.add_argument('-c', '--codigo', dest='codigo', help='Código fuente a analizar')
+    args = parser.parse_args()
+
+    if args.codigo:
+        # Analizar código proporcionado como argumento
+        tokens_encontrados = lexer_action(args.codigo)
+        for token in tokens_encontrados:
+            print(token)
+    else:
+        # Pedir al usuario que ingrese el código
+        codigo = input("Ingrese el código a analizar:\n")
+        tokens_encontrados = lexer_action(codigo)
+        for token in tokens_encontrados:
+            print(token)
