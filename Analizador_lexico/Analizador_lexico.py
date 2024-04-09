@@ -18,7 +18,9 @@ tokens = (
     'LLAVE_IZQ',
     'LLAVE_DER',
     'OPERATOR',
-    'COMA'
+    'COMA',
+    'PUNTO_Y_COMA',
+    'COMENTARIO'
 )
 
 t_CORCHETE_DER = r'\]'
@@ -28,6 +30,7 @@ t_LLAVE_DER = r'\}'
 t_PARENTESIS_IZQ = r'\('
 t_PARENTESIS_DER = r'\)'
 t_COMA = r'\,'
+t_PUNTO_Y_COMA=r'\;'
 
 
 def t_OPERATOR(t):
@@ -62,6 +65,9 @@ def t_INT(t):
     t.value = int(t.value)
     return t
 
+def t_COMENTARIO(t):
+    r'\/\/.*|\/\*(.|\n)*?\*\/'  # Patrón para comentarios de una línea o múltiples líneas
+    pass  # No se devuelve ningún token para comentarios
 
 def t_linea(t):
     r'\n+'
@@ -74,7 +80,8 @@ t_ignore = ' \t'
 def t_error(t):
     print("Caracter invalido '%s'" % t.value[0] + ", in line: " + str(t.lexer.lineno))
     t.lexer.skip(1)
-    raise Exception("Error lexicografico.\n Por favor remueva el caracter invalido e intentelo de nuevo.\n Caracter invalido '%s'" % t.value[0] + ", en la linea: " + str(t.lexer.lineno))
+    #raise Exception("Error lexicografico.\n Por favor remueva el caracter invalido e intentelo de nuevo.\n Caracter invalido '%s'" % t.value[0] + ", en la linea: " + str(t.lexer.lineno))
+    print("Ijole chavo, no está en el lenguaje, como ve")
 
 
 def lexer_action(data):
