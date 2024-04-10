@@ -1,7 +1,6 @@
-import argparse
 import ply.lex as lex
 
-reserved = ['if', 'then', 'function', 'and', 'elseif', 'nil', 'return', 'while', 'break', 'end', 'not', 'do',
+reservadas = ['if', 'then', 'function', 'and', 'elseif', 'nil', 'return', 'while', 'break', 'end', 'not', 'do',
             'false', 'in', 'true', 'else', 'for', 'local', 'repeat', 'until', 'type', 'print', 'require', 'or',
             'table']
 
@@ -11,13 +10,13 @@ tokens = (
     'PARENTESIS_DER',
     'FLOAT',
     'STRING',
-    'IDENTIFIER',
-    'RESERVED',
+    'IDENTIFICADOR',
+    'RESERVADAS',
     'CORCHETE_DER',
     'CORCHETE_IZQ',
     'LLAVE_IZQ',
     'LLAVE_DER',
-    'OPERATOR',
+    'OPERADOR',
     'COMA',
     'PUNTO_Y_COMA',
     'COMENTARIO'
@@ -31,20 +30,26 @@ t_PARENTESIS_IZQ = r'\('
 t_PARENTESIS_DER = r'\)'
 t_COMA = r'\,'
 t_PUNTO_Y_COMA=r'\;'
+t_ignore = ' \t'
 
 
-def t_OPERATOR(t):
-    r'[+\-*/=><~#%^\.:]'
-    t.type = 'OPERATOR'
+def t_COMENTARIO(t):
+    r"//.*"
+    t.type = "COMENTARIO"
     return t
 
 
-def t_IDENTIFIER(t):
+def t_OPERADOR(t):
+    r'[+\-*/=><~#%^\.:]'
+    t.type = 'OPERADOR'
+    return t
+
+def t_IDENTIFICADOR(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    if t.value.lower() in reserved:
-        t.type = 'RESERVED'
+    if t.value.lower() in reservadas:
+        t.type = 'RESERVADAS'
     else:
-        t.type = 'IDENTIFIER'
+        t.type = 'IDENTIFICADOR'
     return t
 
 
@@ -59,30 +64,18 @@ def t_FLOAT(t):
     t.value = float(t.value)
     return t
 
-
 def t_INT(t):
     r'\d+(?![\.\d])'
     t.value = int(t.value)
     return t
 
-def t_COMENTARIO(t):
-    r'\/\/.*|\/\*(.|\n)*?\*\/'  # Patrón para comentarios de una línea o múltiples líneas
-    pass  # No se devuelve ningún token para comentarios
-
 def t_linea(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-
-t_ignore = ' \t'
-
-
 def t_error(t):
-    print("Caracter invalido '%s'" % t.value[0] + ", in line: " + str(t.lexer.lineno))
+    print("Caracter invalido '%s'" % t.value[0] + ", en la linea: " + str(t.lexer.lineno))
     t.lexer.skip(1)
-    #raise Exception("Error lexicografico.\n Por favor remueva el caracter invalido e intentelo de nuevo.\n Caracter invalido '%s'" % t.value[0] + ", en la linea: " + str(t.lexer.lineno))
-    print("Ijole chavo, no está en el lenguaje, como ve")
-
 
 def lexer_action(data):
     token_list = []
@@ -95,20 +88,20 @@ def lexer_action(data):
         token_list.append((tok.type, tok.value, tok.lineno))
     return token_list
 
+def abrir_archivo(arch):
+    try:
+        with open(arch, 'r') as file:
+            datos = file.read()
+            tokens = lexer_action(datos)
+            print("Tokens encontrados en el archivo", archivo, ":\n")
+
+            # Impresion de los tokens encontrados
+            for token in tokens:
+                print(token)
+    except FileNotFoundError:
+        print("El archivo no se encuentra =(")
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Analizador léxico')
-    parser.add_argument('-c', '--codigo', dest='codigo', help='Código fuente a analizar')
-    args = parser.parse_args()
-
-    if args.codigo:
-        # Analizar código proporcionado como argumento
-        tokens_encontrados = lexer_action(args.codigo)
-        for token in tokens_encontrados:
-            print(token)
-    else:
-        # Pedir al usuario que ingrese el código
-        codigo = input("Ingrese el código a analizar:\n")
-        tokens_encontrados = lexer_action(codigo)
-        for token in tokens_encontrados:
-            print(token)
+    archivo = "arch_prueba.js"
+    abrir_archivo(archivo)
