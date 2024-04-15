@@ -11,6 +11,7 @@ await,break,case,catch,class,const,continue,debugger,default,delete,do,else,enum
 ,import,in,instanceof,interface,let,new,package,private,protected,public,return,static,super,switch,this,throw,try,typeof,var        void
 ,while      with       yield
 
+Parte String: (?<!\\)
 
 # tokens_regex = {
 #     'IDENTIFICADOR': r'[a-zA-Z_][a-zA-Z0-9_]*',
@@ -248,3 +249,23 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+----
+#
+def t_IDENTIFICADOR(t):
+    r'[a-zA-Z_$][a-zA-Z_0-9$]*'
+    if t.value.lower() in reservadas:
+        t.type = 'RESERVADAS'
+    else:
+        t.type = 'IDENTIFICADOR'
+    return t
+###
+
+"""
+def t_error(t):
+    print("Caracter invalido '%s'" % t.value + ", en la linea: " + str(t.lexer.lineno))
+    t.lexer.lineno += len(t.value)
+    t.lexer.skip(len(t.value) + 1)
+    #sys.exit(1)
+"""

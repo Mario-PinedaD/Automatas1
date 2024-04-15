@@ -1,11 +1,28 @@
-//Esto es un comentario jiji
+////Esto es un comentario jiji
 function mostrarMensaje(mensaje) {
     console.log(mensaje);
 }
-console.log(2333.84 8 7 99 -8)
+mensaje="Hola"
+mostrarMensaje(mensaje)
+/*
+Opciones
+*/
+//Palabras reservadas
+for if while else
 
-mostrarMensaje("Hola mundo");
-print("Esto no deberia estar dentro del lenguaje pero igual deberia aceptarlo pq esta bien escrito 1yr3yg bgogryu1 gbyr31bgy")
+//Identificadores
+console.log("jajaekisde"); let var1, var2, $dinero$;
 
-la_prueba_ñ
-ñ
+//Operadores
++-*/%=><!&|^~?: == ++
+
+//Enteros
+3576891 7 3517890 0 -0
+
+//FLOTANTES
+134.77 .8 4.99 .00000000008
+
+//Los que no se aceptan
+console
+preagibgia
+la_prueba_º
