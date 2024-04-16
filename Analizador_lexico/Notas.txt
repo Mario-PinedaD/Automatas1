@@ -263,6 +263,7 @@ def t_IDENTIFICADOR(t):
 ###
 
 """
+Este funciona pero para reconocer todo, desde el inicio hasta el fin
 def t_error(t):
     print("Caracter invalido '%s'" % t.value + ", en la linea: " + str(t.lexer.lineno))
     t.lexer.lineno += len(t.value)

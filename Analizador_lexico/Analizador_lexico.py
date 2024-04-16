@@ -32,6 +32,9 @@ tokens = [
 ]
 
 # \ Secuencia de escape
+t_ERROR = (r'(\w | \d)+ ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)+ '
+         r'| (\w | \d)* ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)+ '
+         r'| (\w | \d)* ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)* ')
 t_PARENTESIS_IZQ = r'\('
 t_PARENTESIS_DER = r'\)'
 t_CORCHETE_DER = r'\]'
@@ -59,7 +62,7 @@ def t_OPERADOR(t):
 
 def t_IDENTIFICADOR(t):
     r'[a-zA-Z_$][a-zA-Z_0-9$]*'
-    if t.value.lower in reservadas:
+    if t.value.lower() in reservadas:
         t.type = 'RESERVADAS'
     else:
         t.type = 'IDENTIFICADOR'
@@ -84,21 +87,19 @@ def t_linea(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    t.type = "ERROR"
-    print("Caracter invalido '%s'" % t.value + ", en la linea: " + str(t.lexer.lineno))
+    patron = re.compile(r'[a-zA-Z_$][a-zA-Z_0-9$]*')
+    cadena_no_valida = patron.findall(t.value)
+    print(cadena_no_valida)
+    print("Error")
+    e_inicio = r'.+? (\w+?) (\n+)'
+    e_final = r'(?=\s|$) .+?'
+    e_medio = r'(?=\s|$) .+? (?=\s|\n|$)'
+    #if re.match(e_inicio,t.value):
+    t.type = 'ERROR'
     t.lexer.lineno += len(t.value)
-    t.lexer.skip(1)
-    #sys.exit(1)
+    t.lexer.skip(len(t.value) + 1)
 
-    # Encuentra el inicio de la palabra actual
-    inicio_palabra = t.lexer.lexdata.rfind(" ", 0, t.lexpos) + 1
-    # Encuentra el final de la palabra actual
-    final_palabra = t.lexer.lexdata.find(" ", t.lexpos)
-    if final_palabra == -1:
-        final_palabra = len(t.lexer.lexdata)
-    print("Error léxico en la palabra:\n", t.lexer.lexdata[inicio_palabra:final_palabra])
-    # Omitir la palabra completa
-    t.lexer.lexpos = final_palabra
+
 
 def lexer_action(data):
     token_list = []
@@ -116,13 +117,13 @@ def abrir_archivo(arch):
         with open(arch, 'r') as file:
             datos = file.read()
             tokens_encontrados = lexer_action(datos)
+            #Modificar los datos encontrados
+            tok = tokens_encontrados
             print("Tokens encontrados en el archivo", arch, ":\n")
             # Impresion de los tokens_encontrados encontrados
             for token in tokens_encontrados:
                 if token[0] != 'ERROR':
                     print(token)
-                else:
-                    print("Error encontrado en el token")
     except FileNotFoundError:
         print("El archivo no se encuentra =(")
 
