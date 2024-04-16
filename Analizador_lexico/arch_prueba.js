@@ -25,7 +25,9 @@ console.log("jajaekisde"); let var1, var2, $dinero$;
 //Los que no se aceptan
 console
 preagibgia
+invalidos
 
 \prueba_i
 medio\pru
+ññlleaglñkgjklñaegae
 fin\

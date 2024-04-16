@@ -32,9 +32,9 @@ tokens = [
 ]
 
 # \ Secuencia de escape
-t_ERROR = (r'(\w | \d)+ ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)+ '
-         r'| (\w | \d)* ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)+ '
-         r'| (\w | \d)* ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)* ')
+#t_ERROR = (r'(\w | \d)+ ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)+ '
+#         r'| (\w | \d)* ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)+ '
+#         r'| (\w | \d)* ([^\w\d\.\+\-\*\/\%\(\)\[\]\{\},\:\;\.\'\"\>\<\!\?\&\|\^\~\:\?])+? (\w | \d)* ')
 t_PARENTESIS_IZQ = r'\('
 t_PARENTESIS_DER = r'\)'
 t_CORCHETE_DER = r'\]'
@@ -87,19 +87,10 @@ def t_linea(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    patron = re.compile(r'[a-zA-Z_$][a-zA-Z_0-9$]*')
-    cadena_no_valida = patron.findall(t.value)
-    print(cadena_no_valida)
-    print("Error")
-    e_inicio = r'.+? (\w+?) (\n+)'
-    e_final = r'(?=\s|$) .+?'
-    e_medio = r'(?=\s|$) .+? (?=\s|\n|$)'
-    #if re.match(e_inicio,t.value):
+    print("Caracteres invalidos")
     t.type = 'ERROR'
     t.lexer.lineno += len(t.value)
-    t.lexer.skip(len(t.value) + 1)
-
-
+    t.lexer.skip(len(t.value))
 
 def lexer_action(data):
     token_list = []
