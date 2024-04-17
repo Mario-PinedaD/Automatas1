@@ -91,6 +91,7 @@ def t_error(t):
     t.type = 'ERROR'
     t.lexer.lineno += len(t.value)
     t.lexer.skip(len(t.value))
+    #sys.exit(0)
 
 def lexer_action(data):
     token_list = []

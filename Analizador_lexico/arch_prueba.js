@@ -26,8 +26,4 @@ console.log("jajaekisde"); let var1, var2, $dinero$;
 console
 preagibgia
 invalidos
-
-\prueba_i
-medio\pru
-ññlleaglñkgjklñaegae
-fin\
+papa
