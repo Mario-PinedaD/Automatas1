@@ -1,0 +1,14 @@
+a
+b
+ac
+bc
+aabc
+abbc
+aaaaaabb
+bbbbbbbbbbbbbbbc
+aaaaaaaaaaaaaa
+-
+-
+ab
+aaabbb
+aaaaaabbbbb
