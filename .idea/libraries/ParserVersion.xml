@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="ParserVersion">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/GUIParsing/ParserVersion" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/GUIParsing/TokenMgrVersion" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/Interpreter" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/JJTreeExamples/java" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/JavaGrammars" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/JavaGrammars/1.5" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/Obfuscator" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/Obfuscator/input" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/Transformer" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/examples/VTransformer" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/src/main/java" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/src/test/java" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/test/javaFileGeneration/expected/no-keep-line" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/test/javaFileGeneration/expected/non-static" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/test/javaFileGeneration/expected/not-public" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/test/javaFileGeneration/expected/static" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/test/javaFiles" />
+      <root url="file://$PROJECT_DIR$/../../../../javacc-javacc-7.0.13/javacc-javacc-7.0.13/test/newToken" />
+    </SOURCES>
+  </library>
+</component>
