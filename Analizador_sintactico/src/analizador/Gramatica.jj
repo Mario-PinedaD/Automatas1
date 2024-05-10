@@ -19,19 +19,24 @@ SKIP : {
 }
 
 TOKEN : {
-      <NUMERO: (["0"-"9"])+>
-    | <DECIMAL: (["0"-"9"])+"."(["0"-"9"])+>
-    | <EVALUAR: "Evaluar">
-    | <PCOMA: ";">
-    | <PARENI: "(">
-    | <PAREND: ")">
-    | <CORI: "[">
-    | <CORD: "]">
-    | <MAS: "+">
-    | <MENOS: "-">
-    | <POR: "*">
-    | <DIV: "/">
-}
+      <INT: (["0"-"9"])+>
+    | <FLOAT: (["0"-"9"])+ "." (["0"-"9"])+>
+    | <STRING: "\"" (~["\""])* "\"">
+    | <IDENTIFICADOR: (["a"-"z","A"-"Z","_"]) (["a"-"z","A"-"Z","_"])*>
+    | <PARENTESIS_IZQ: "(">
+    | <PARENTESIS_DER: ")">
+    | <CORCHETE_IZQ: "[">
+    | <CORCHETE_DER: "]">
+    | <LLAVE_IZQ: "{">
+    | <LLAVE_DER: "}">
+    | <COMA: ",">
+    | <PUNTO_Y_COMA: ";">
+    | <PUNTO: ".">
+    | <COMENTARIO: ()>
+    | <SUMA: "+">
+    | <RESTA: "-">
+    | <MULTIPLICACION: "*">
+    | <DIVISION: "/">
 /** Fin Lexico */
 
 /** Producción inicial
