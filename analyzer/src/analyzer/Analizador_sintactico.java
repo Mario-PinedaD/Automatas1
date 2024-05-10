@@ -1,15 +1,3 @@
-//package analyzer;
-//
-///**
-// *
-// * @author Mario
-// */
-//public class Analizador_sintactico {
-//    public static void main(String[] args) {
-//        System.out.println("Si jaló wey");
-//    }
-//}
-
 package analyzer;
 
 import Analizador.Gramatica;
