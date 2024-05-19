@@ -1,0 +1,236 @@
+options {
+  IGNORE_CASE = false;
+  STATIC = false;
+}
+
+PARSER_BEGIN(JavaScriptParser)
+/** Analizador de un subconjunto del lenguaje JavaScript. */
+package Analizador;
+
+public class JavaScriptParser {
+  public static void main(String[] args) throws ParseException {
+    JavaScriptParser parser = new JavaScriptParser(System.in);
+    parser.Program();
+  }
+}
+PARSER_END(JavaScriptParser)
+
+/** Espacios en blanco y comentarios */
+SKIP : {
+    " " | "\t" | "\r" | "\n"
+    | < "/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/" > // Comentarios multilínea
+    | < "//" (~["\r", "\n"])* ("\r" | "\n") > // Comentarios de una línea
+}
+
+/** Tokens */
+TOKEN : {
+    < AWAIT: "await" >
+  | < BREAK: "break" >
+  | < CASE: "case" >
+  | < CATCH: "catch" >
+  | < CLASS: "class" >
+  | < CONSOLE: "console" >
+  | < CONST: "const" >
+  | < CONTINUE: "continue" >
+  | < DEBUGGER: "debugger" >
+  | < DEFAULT: "default" >
+  | < DELETE: "delete" >
+  | < DO: "do" >
+  | < ELSE: "else" >
+  | < ENUM: "enum" >
+  | < EXPORT: "export" >
+  | < EXTENDS: "extends" >
+  | < FALSE: "false" >
+  | < FINALLY: "finally" >
+  | < FOR: "for" >
+  | < FUNCTION: "function" >
+  | < IF: "if" >
+  | < IMPLEMENTS: "implements" >
+  | < IMPORT: "import" >
+  | < IN: "in" >
+  | < INSTANCEOF: "instanceof" >
+  | < INTERFACE: "interface" >
+  | < LET: "let" >
+  | < LOG: "log" >
+  | < NEW: "new" >
+  | < NULL: "null" >
+  | < PACKAGE: "package" >
+  | < PRIVATE: "private" >
+  | < PROTECTED: "protected" >
+  | < PUBLIC: "public" >
+  | < RETURN: "return" >
+  | < SUPER: "super" >
+  | < SWITCH: "switch" >
+  | < STATIC: "static" >
+  | < THIS: "this" >
+  | < THROW: "throw" >
+  | < TRY: "try" >
+  | < TYPEOF: "typeof" >
+  | < TRUE: "true" >
+  | < VAR: "var" >
+  | < VOID: "void" >
+  | < WHILE: "while" >
+  | < WITH: "with" >
+  | < YIELD: "yield" >
+
+  | < IDENTIFIER: (["a"-"z", "A"-"Z", "_"]) (["a"-"z", "A"-"Z", "0"-"9", "_"])* >
+  | < INTEGER_LITERAL: (["0"-"9"])+ >
+  | < FLOATING_POINT_LITERAL: (["0"-"9"])+ "." (["0"-"9"])* >
+  | < STRING_LITERAL: "\"" (~["\""])* "\"" >
+
+  | < LPAREN: "(" >
+  | < RPAREN: ")" >
+  | < LBRACE: "{" >
+  | < RBRACE: "}" >
+  | < LBRACK: "[" >
+  | < RBRACK: "]" >
+  | < SEMICOLON: ";" >
+  | < COMMA: "," >
+  | < DOT: "." >
+
+  | < PLUS: "+" >
+  | < MINUS: "-" >
+  | < MULT: "*" >
+  | < DIV: "/" >
+  | < MOD: "%" >
+  | < ASSIGN: "=" >
+  | < EQ: "==" >
+  | < NEQ: "!=" >
+  | < LT: "<" >
+  | < GT: ">" >
+  | < LTE: "<=" >
+  | < GTE: ">=" >
+}
+
+/** Reglas de producción */
+void Program() :
+{}
+{
+  (Statement())* <EOF>
+}
+
+void Statement() :
+{}
+{
+    Block()
+  | VariableDeclaration()
+  | IfStatement()
+  | WhileStatement()
+  | ForStatement()
+  | ReturnStatement()
+  | ExpressionStatement()
+}
+
+void Block() :
+{}
+{
+  <LBRACE> (Statement())* <RBRACE>
+}
+
+void VariableDeclaration() :
+{}
+{
+  (<VAR> | <LET> | <CONST>) <IDENTIFIER> ( <ASSIGN> Expression() )? <SEMICOLON>
+}
+
+void IfStatement() :
+{}
+{
+  <IF> <LPAREN> Expression() <RPAREN> Statement() ( <ELSE> Statement() )?
+}
+
+void WhileStatement() :
+{}
+{
+  <WHILE> <LPAREN> Expression() <RPAREN> Statement()
+}
+
+void ForStatement() :
+{}
+{
+  <FOR> <LPAREN> ( VariableDeclaration() | Expression()? <SEMICOLON> ) Expression()? <SEMICOLON> Expression()? <RPAREN> Statement()
+}
+
+void ReturnStatement() :
+{}
+{
+  <RETURN> Expression()? <SEMICOLON>
+}
+
+void ExpressionStatement() :
+{}
+{
+  Expression() <SEMICOLON>
+}
+
+void Expression() :
+{}
+{
+  AssignmentExpression()
+}
+
+void AssignmentExpression() :
+{}
+{
+  ConditionalExpression() ( <ASSIGN> AssignmentExpression() )?
+}
+
+void ConditionalExpression() :
+{}
+{
+  OrExpression()
+}
+
+void OrExpression() :
+{}
+{
+  AndExpression() ( "||" AndExpression() )*
+}
+
+void AndExpression() :
+{}
+{
+  EqualityExpression() ( "&&" EqualityExpression() )*
+}
+
+void EqualityExpression() :
+{}
+{
+  RelationalExpression() ( ( <EQ> | <NEQ> ) RelationalExpression() )*
+}
+
+void RelationalExpression() :
+{}
+{
+  AdditiveExpression() ( ( <LT> | <GT> | <LTE> | <GTE> ) AdditiveExpression() )*
+}
+
+void AdditiveExpression() :
+{}
+{
+  MultiplicativeExpression() ( ( <PLUS> | <MINUS> ) MultiplicativeExpression() )*
+}
+
+void MultiplicativeExpression() :
+{}
+{
+  UnaryExpression() ( ( <MULT> | <DIV> | <MOD> ) UnaryExpression() )*
+}
+
+void UnaryExpression() :
+{}
+{
+    <PLUS> UnaryExpression()
+  | <MINUS> UnaryExpression()
+  | PrimaryExpression()
+}
+
+void PrimaryExpression() :
+{}
+{
+    <IDENTIFIER>
+  | <INTEGER_LITERAL>
+  | <FLOATING_POINT_LITERAL>
+  | <STRING_LITERAL>
+  | <LPAREN> Expression() <RPAREN>
+}

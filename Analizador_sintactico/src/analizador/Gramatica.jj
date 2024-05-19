@@ -1,16 +1,23 @@
 options {
+/*El IGNORE_CASE hace que sea insensible a las mayusculas, minusculas
+  Por otro lado, el static, especifica que el analizadór generará o no métodos y variables estáticas.
+*/
   IGNORE_CASE = true;
   STATIC = false;
 }
-º
+
+º //Aqui hay una bolita que no se que sea, sinceramente º
+
+/*El "PARSER_BEGIN" y el "PARSER_END" encierran la definición de la clase del analizador
+    este se llama "Gramatica" y pertenece al paquete "Analizador"*/
 PARSER_BEGIN(Gramatica)
-/** Analizador de expresiones aritmeticas sencillas. */
 package Analizador;
 public class Gramatica {
 }
 PARSER_END(Gramatica)
 
 /** Lexico */
+/* Un skip de todos los caracteres que deben ser ignorados*/
 SKIP : {
       " "
     | "\t"
@@ -18,6 +25,7 @@ SKIP : {
     | "\n"
 }
 
+/*Los tipos de tokens que el analizador va a reconocer*/
 TOKEN : {
       <INT: (["0"-"9"])+>
     | <FLOAT: (["0"-"9"])+ "." (["0"-"9"])+>
@@ -32,20 +40,70 @@ TOKEN : {
     | <COMA: ",">
     | <PUNTO_Y_COMA: ";">
     | <PUNTO: ".">
-    | <COMENTARIO: ()>
     | <SUMA: "+">
     | <RESTA: "-">
     | <MULTIPLICACION: "*">
     | <DIVISION: "/">
+
+    //Palabras reservadas
+    | <AWAIT: "await">
+    | <BREAK: "break">
+    | <CASE: "case">
+    | <CATCH: "catch">
+    | <CLASS: "class">
+    | <CONSOLE: "console">
+    | <CONST: "const">
+    | <CONTINUE: "continue">
+    | <DEBUGGER: "debugger">
+    | <DEFAULT: "default">
+    | <DELETE: "delete">
+    | <DO: "do">
+    | <ELSE: "else">
+    | <ENUM: "enum">
+    | <EXPORT: "export">
+    | <EXTENDS: "extends">
+    | <FALSE: "false">
+    | <FINALLY: "finally">
+    | <FOR: "for">
+    | <FUNCTION: "function">
+    | <IF: "if">
+    | <IMPLEMENTS: "implements">
+    | <IMPORT: "import">
+    | <IN: "in">
+    | <INSTANCEOF: "instanceof">
+    | <INTERFACE: "interface">
+    | <LET: "let">
+    | <LOG: "log">
+    | <NEW: "new">
+    | <NULL: "null">
+    | <PACKAGE: "package">
+    | <PRIVATE: "private">
+    | <PROTECTED: "protected">
+    | <PUBLIC: "public">
+    | <RETURN: "return">
+    | <SUPER: "super">
+    | <SWITCH: "switch">
+    | <STATIC: "static">
+    | <THIS: "this">
+    | <THROW: "throw">
+    | <TRY: "try">
+    | <TYPEOF: "typeof">
+    | <TRUE: "true">
+    | <VAR: "var">
+    | <VOID: "void">
+    | <WHILE: "while">
+    | <WITH: "with">
+    | <YIELD: "yield">
+}
 /** Fin Lexico */
 
 /** Producción inicial
-    Analizar -> (Instruccion)+ EOF
+    Analizar -> (Instruccion)+ EOF??
 */
 void Analizar() :
 {}
 {
-  (Instruccion())+ <EOF>
+  (Instruccion)()+ <EOF>
 }
 
 /** Instruccion -> evaluar [ Expresion ]; */
