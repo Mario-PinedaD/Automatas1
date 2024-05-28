@@ -9,6 +9,8 @@ function sumarFloatYInt() {
 
     // Mostrar el resultado
     console.log("La suma de " + numeroFloat + " y " + numeroInt + " es: " + resultado);
+    console.log("Jose",luis,"mario");
+    console.log("Esta es una prueba con", 9+10," las 2 maneras");
 }
 
 // Función que muestra un contador del 1 al 10

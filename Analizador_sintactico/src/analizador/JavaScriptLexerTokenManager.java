@@ -1007,6 +1007,9 @@ public Token getNextToken()
       matchedToken = jjFillToken();
       return matchedToken;
    }
+   image = jjimage;
+   image.setLength(0);
+   jjimageLen = 0;
 
    try { input_stream.backup(0);
       while (curChar <= 32 && (0x100002600L & (1L << curChar)) != 0L)
@@ -1023,6 +1026,7 @@ public Token getNextToken()
       if ((jjtoToken[jjmatchedKind >> 6] & (1L << (jjmatchedKind & 077))) != 0L)
       {
          matchedToken = jjFillToken();
+         TokenLexicalActions(matchedToken);
          return matchedToken;
       }
       else
@@ -1074,6 +1078,11 @@ void TokenLexicalActions(Token matchedToken)
 {
    switch(jjmatchedKind)
    {
+      case 64 :
+        image.append(jjstrLiteralImages[64]);
+        lengthOfMatch = jjstrLiteralImages[64].length();
+                           System.out.println("PUNTO_Y_COMA -> " + image + "\n");
+         break;
       default :
          break;
    }

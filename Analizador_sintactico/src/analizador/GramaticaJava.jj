@@ -83,13 +83,13 @@ TOKEN : {
   | < FLOAT: (["0"-"9"])+ "." (["0"-"9"])* >
   | < STRING: "\"" (~["\""])* "\"" >
 
-  | < I_PARENTESIS: "(" >
-  | < D_PARENTESIS: ")" >
+  | < PARENTESIS_I: "(" >
+  | < PARENTESIS_D: ")" >
   | < LLAVE_IZQ: "{" >
   | < LLAVE_DER: "}" >
   | < CORCHETE_IZQ: "[" >
   | < CORCHETE_DER: "]" >
-  | < PUNTO_Y_COMA: ";" >
+  | < PUNTO_Y_COMA: ";" > {System.out.println("PUNTO_Y_COMA -> " + image + "\n"); }
   | < COMA: "," >
   | < PUNTO: "." >
 
@@ -111,12 +111,10 @@ TOKEN : {
 void Program() :
 {}
 {
-  (Statement())* //<PUNTO_Y_COMA>
+  (Statement())* <PUNTO_Y_COMA>
 }
 
-void Statement() :
-{}
-{
+void Statement() :{} {
     Block()
   | VariableDeclaration()
   | IfStatement()
@@ -124,118 +122,116 @@ void Statement() :
   | ForStatement()
   | ReturnStatement()
   | ExpressionStatement()
+  | FunctionDeclare()
+  | ConsoleStatement()
 }
 
-void Block() :
-{}
-{
+void FunctionDeclare() : {} {
+  <FUNCTION> <IDENTIFICADOR> <PARENTESIS_I> (ParameterList())? <PARENTESIS_D> Block() <PUNTO_Y_COMA>
+}
+
+void ParameterList() : {} {
+  <IDENTIFICADOR> (<COMA> <IDENTIFICADOR>)*
+}
+
+void Block() : {} {
   <LLAVE_IZQ> (Statement())* <LLAVE_DER>
 }
 
-void VariableDeclaration() :
-{}
-{
+void VariableDeclaration() : {} {
   (<VAR> | <LET> | <CONST>) <IDENTIFICADOR> ( <IGUAL> Expression() )? <PUNTO_Y_COMA>
 }
 
-void IfStatement() :
-{}
-{
-  <IF> <I_PARENTESIS> Expression() <D_PARENTESIS> Statement() ( <ELSE> Statement() )?
+void IfStatement() : {} {
+  <IF> <PARENTESIS_I> Expression() <PARENTESIS_D> Statement() ( <ELSE> Statement() )?
 }
 
-void WhileStatement() :
-{}
-{
-  <WHILE> <I_PARENTESIS> Expression() <D_PARENTESIS> Statement()
+void WhileStatement() : {} {
+  <WHILE> <PARENTESIS_I> Expression() <PARENTESIS_D> Statement()
 }
 
-void ForStatement() :
-{}
-{
-  <FOR> <I_PARENTESIS> ( VariableDeclaration() | [Expression()] <PUNTO_Y_COMA> ) [Expression()] <PUNTO_Y_COMA> [Expression()] <D_PARENTESIS> Statement()
+void ForStatement() : {} {
+  <FOR> <PARENTESIS_I> ( VariableDeclaration() | [Expression()] <PUNTO_Y_COMA> ) [Expression()] <PUNTO_Y_COMA> [Expression()] <PARENTESIS_D> Statement()
 }
 
-void ReturnStatement() :
-{}
-{
-  <RETURN> [Expression()] <PUNTO_Y_COMA>
+void ReturnStatement() : {} {
+    <RETURN> [Expression()] <PUNTO_Y_COMA> 
 }
 
-void ExpressionStatement() :
-{}
-{
+//Pa que chambee el console.log
+void ConsoleStatement() : {} {
+    <CONSOLE> <PUNTO> <LOG> <PARENTESIS_I> Contenido() <PARENTESIS_D> <PUNTO_Y_COMA>
+}
+
+
+//El contenido del console.log
+void Contenido() : {} { 
+    (DatosBasicos() | Concatenation())*
+}
+
+void Concatenation() : {} {
+    (<COMA> DatosBasicos()) | ( <MAS> DatosBasicos() )
+}
+void ExpressionStatement() : {} {
   Expression() <PUNTO_Y_COMA>
 }
 
-void Expression() :
-{}
-{
+void Expression() : {} {
   AssignmentExpression()
 }
 
-void AssignmentExpression() :
-{}
-{
+void AssignmentExpression() : {} {
   ConditionalExpression() ( <IGUAL> AssignmentExpression() )?
 }
 
-void ConditionalExpression() :
-{}
-{
+void ConditionalExpression() : {} {
   OrExpression()
 }
 
-void OrExpression() :
-{}
-{
+void OrExpression() : {} {
   AndExpression() ( "||" AndExpression() )*
 }
 
-void AndExpression() :
-{}
-{
+void AndExpression() : {} {
   EqualityExpression() ( "&&" EqualityExpression() )*
 }
 
-void EqualityExpression() :
-{}
-{
+void EqualityExpression() : {} {
   RelationalExpression() ( ( <EQ> | <NEQ> ) RelationalExpression() )*
 }
 
-void RelationalExpression() :
-{}
-{
+void RelationalExpression() : {} {
   AdditiveExpression() ( ( <LT> | <GT> | <LTE> | <GTE> ) AdditiveExpression() )*
 }
 
-void AdditiveExpression() :
-{}
-{
+void AdditiveExpression() : {} {
   MultiplicativeExpression() ( ( <MAS> | <MENOS> ) MultiplicativeExpression() )*
 }
 
-void MultiplicativeExpression() :
-{}
-{
+void MultiplicativeExpression() : {} {
   UnaryExpression() ( ( <MULT> | <DIV> | <MOD> ) UnaryExpression() )*
 }
 
-void UnaryExpression() :
-{}
-{
+void UnaryExpression() : {} {
     <MAS> UnaryExpression()
   | <MENOS> UnaryExpression()
   | PrimaryExpression()
 }
 
-void PrimaryExpression() :
-{}
-{
+void PrimaryExpression() : {} {
     <IDENTIFICADOR>
   | <INT>
   | <FLOAT>
   | <STRING>
-  | <I_PARENTESIS> Expression() <D_PARENTESIS>
+  | <PARENTESIS_I> Expression() <PARENTESIS_D>
+}
+
+//Falta checar bien lo de For
+
+void DatosBasicos() : {} {
+    <INT> | <IDENTIFICADOR> | <FLOAT> | <STRING> 
+}
+
+void ForBucle() : {} {
+    <FOR> <PARENTESIS_I> ContenidoFor() <PARENTESIS_D> Block() <PUNTO_Y_COMA>
 }
