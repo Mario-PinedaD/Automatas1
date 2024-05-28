@@ -1,29 +1,33 @@
 options {
-  IGNORE_CASE = false;
+  IGNORE_CASE = true;
   STATIC = false;
 }
 
-PARSER_BEGIN(JavaScriptParser)
+PARSER_BEGIN(JavaScriptLexer)
 /** Analizador de un subconjunto del lenguaje JavaScript. */
-package Analizador;
+package analizador;
 
-public class JavaScriptParser {
+public class JavaScriptLexer {
   public static void main(String[] args) throws ParseException {
-    JavaScriptParser parser = new JavaScriptParser(System.in);
-    parser.Program();
+    JavaScriptLexer lexer = new JavaScriptLexer(System.in);
+    lexer.Program();
   }
 }
-PARSER_END(JavaScriptParser)
+PARSER_END(JavaScriptLexer)
 
 /** Espacios en blanco y comentarios */
 SKIP : {
-    " " | "\t" | "\r" | "\n"
+    " " 
+    | "\t" 
+    | "\r" 
+    | "\n"
     | < "/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/" > // Comentarios multilínea
     | < "//" (~["\r", "\n"])* ("\r" | "\n") > // Comentarios de una línea
 }
 
 /** Tokens */
 TOKEN : {
+    //Palabras reservadas
     < AWAIT: "await" >
   | < BREAK: "break" >
   | < CASE: "case" >
@@ -33,7 +37,7 @@ TOKEN : {
   | < CONST: "const" >
   | < CONTINUE: "continue" >
   | < DEBUGGER: "debugger" >
-  | < DEFAULT: "default" >
+  //| < DEFAULT: "default" >
   | < DELETE: "delete" >
   | < DO: "do" >
   | < ELSE: "else" >
@@ -73,27 +77,28 @@ TOKEN : {
   | < WITH: "with" >
   | < YIELD: "yield" >
 
-  | < IDENTIFIER: (["a"-"z", "A"-"Z", "_"]) (["a"-"z", "A"-"Z", "0"-"9", "_"])* >
-  | < INTEGER_LITERAL: (["0"-"9"])+ >
-  | < FLOATING_POINT_LITERAL: (["0"-"9"])+ "." (["0"-"9"])* >
-  | < STRING_LITERAL: "\"" (~["\""])* "\"" >
+    //Tokens generales como, identificadores, enteros, flotantes y cadenas.
+  | < IDENTIFICADOR: (["a"-"z", "A"-"Z", "_"]) (["a"-"z", "A"-"Z", "0"-"9", "_"])* >
+  | < INT: (["0"-"9"])+ >
+  | < FLOAT: (["0"-"9"])+ "." (["0"-"9"])* >
+  | < STRING: "\"" (~["\""])* "\"" >
 
-  | < LPAREN: "(" >
-  | < RPAREN: ")" >
-  | < LBRACE: "{" >
-  | < RBRACE: "}" >
-  | < LBRACK: "[" >
-  | < RBRACK: "]" >
-  | < SEMICOLON: ";" >
-  | < COMMA: "," >
-  | < DOT: "." >
+  | < I_PARENTESIS: "(" >
+  | < D_PARENTESIS: ")" >
+  | < LLAVE_IZQ: "{" >
+  | < LLAVE_DER: "}" >
+  | < CORCHETE_IZQ: "[" >
+  | < CORCHETE_DER: "]" >
+  | < PUNTO_Y_COMA: ";" >
+  | < COMA: "," >
+  | < PUNTO: "." >
 
-  | < PLUS: "+" >
-  | < MINUS: "-" >
+  | < MAS: "+" >
+  | < MENOS: "-" >
   | < MULT: "*" >
   | < DIV: "/" >
   | < MOD: "%" >
-  | < ASSIGN: "=" >
+  | < IGUAL: "=" >
   | < EQ: "==" >
   | < NEQ: "!=" >
   | < LT: "<" >
@@ -106,7 +111,7 @@ TOKEN : {
 void Program() :
 {}
 {
-  (Statement())* <EOF>
+  (Statement())* //<PUNTO_Y_COMA>
 }
 
 void Statement() :
@@ -124,43 +129,43 @@ void Statement() :
 void Block() :
 {}
 {
-  <LBRACE> (Statement())* <RBRACE>
+  <LLAVE_IZQ> (Statement())* <LLAVE_DER>
 }
 
 void VariableDeclaration() :
 {}
 {
-  (<VAR> | <LET> | <CONST>) <IDENTIFIER> ( <ASSIGN> Expression() )? <SEMICOLON>
+  (<VAR> | <LET> | <CONST>) <IDENTIFICADOR> ( <IGUAL> Expression() )? <PUNTO_Y_COMA>
 }
 
 void IfStatement() :
 {}
 {
-  <IF> <LPAREN> Expression() <RPAREN> Statement() ( <ELSE> Statement() )?
+  <IF> <I_PARENTESIS> Expression() <D_PARENTESIS> Statement() ( <ELSE> Statement() )?
 }
 
 void WhileStatement() :
 {}
 {
-  <WHILE> <LPAREN> Expression() <RPAREN> Statement()
+  <WHILE> <I_PARENTESIS> Expression() <D_PARENTESIS> Statement()
 }
 
 void ForStatement() :
 {}
 {
-  <FOR> <LPAREN> ( VariableDeclaration() | Expression()? <SEMICOLON> ) Expression()? <SEMICOLON> Expression()? <RPAREN> Statement()
+  <FOR> <I_PARENTESIS> ( VariableDeclaration() | [Expression()] <PUNTO_Y_COMA> ) [Expression()] <PUNTO_Y_COMA> [Expression()] <D_PARENTESIS> Statement()
 }
 
 void ReturnStatement() :
 {}
 {
-  <RETURN> Expression()? <SEMICOLON>
+  <RETURN> [Expression()] <PUNTO_Y_COMA>
 }
 
 void ExpressionStatement() :
 {}
 {
-  Expression() <SEMICOLON>
+  Expression() <PUNTO_Y_COMA>
 }
 
 void Expression() :
@@ -172,7 +177,7 @@ void Expression() :
 void AssignmentExpression() :
 {}
 {
-  ConditionalExpression() ( <ASSIGN> AssignmentExpression() )?
+  ConditionalExpression() ( <IGUAL> AssignmentExpression() )?
 }
 
 void ConditionalExpression() :
@@ -208,7 +213,7 @@ void RelationalExpression() :
 void AdditiveExpression() :
 {}
 {
-  MultiplicativeExpression() ( ( <PLUS> | <MINUS> ) MultiplicativeExpression() )*
+  MultiplicativeExpression() ( ( <MAS> | <MENOS> ) MultiplicativeExpression() )*
 }
 
 void MultiplicativeExpression() :
@@ -220,17 +225,17 @@ void MultiplicativeExpression() :
 void UnaryExpression() :
 {}
 {
-    <PLUS> UnaryExpression()
-  | <MINUS> UnaryExpression()
+    <MAS> UnaryExpression()
+  | <MENOS> UnaryExpression()
   | PrimaryExpression()
 }
 
 void PrimaryExpression() :
 {}
 {
-    <IDENTIFIER>
-  | <INTEGER_LITERAL>
-  | <FLOATING_POINT_LITERAL>
-  | <STRING_LITERAL>
-  | <LPAREN> Expression() <RPAREN>
+    <IDENTIFICADOR>
+  | <INT>
+  | <FLOAT>
+  | <STRING>
+  | <I_PARENTESIS> Expression() <D_PARENTESIS>
 }

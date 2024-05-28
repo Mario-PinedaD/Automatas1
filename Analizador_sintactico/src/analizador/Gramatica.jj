@@ -31,8 +31,8 @@ TOKEN : {
     | <FLOAT: (["0"-"9"])+ "." (["0"-"9"])+>
     | <STRING: "\"" (~["\""])* "\"">
     | <IDENTIFICADOR: (["a"-"z","A"-"Z","_"]) (["a"-"z","A"-"Z","_"])*>
-    | <PARENTESIS_IZQ: "(">
-    | <PARENTESIS_DER: ")">
+    | <PARENTESIS_IZQ: "("> 
+   | <PARENTESIS_DER: ")">
     | <CORCHETE_IZQ: "[">
     | <CORCHETE_DER: "]">
     | <LLAVE_IZQ: "{">
@@ -110,7 +110,7 @@ void Analizar() :
 void Instruccion() :
 {double e;}
 {
-  <EVALUAR> <CORI> e=Expresion() <CORD> <PCOMA> {System.out.println("El valor de la expresion es: "+e);}
+  <EVALUAR> <CORI> e = Expresion() <CORD> <PCOMA> {System.out.println("El valor de la expresion es: "+e);}
 }
 
 /** Expresion -> ExpresionMultiplicativa ('+' ExpresionMultiplicativa)*
