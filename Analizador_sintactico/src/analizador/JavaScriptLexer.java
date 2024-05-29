@@ -27,8 +27,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       case INT:
       case FLOAT:
       case STRING:
-      case I_PARENTESIS:
-      case LLAVE_IZQ:
+      case PARENTESIS_I:
       case MAS:
       case MENOS:{
         ;
@@ -40,19 +39,15 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       }
       Statement();
     }
-    jj_consume_token(PUNTO_Y_COMA);
+    jj_consume_token(0);
 }
 
   final public void Statement() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case LLAVE_IZQ:{
-      Block();
-      break;
-      }
     case CONST:
     case LET:
     case VAR:{
-      VariableDeclaration();
+      VarDeclaracion();
       break;
       }
     case IF:{
@@ -64,7 +59,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       break;
       }
     case FOR:{
-      ForStatement();
+      ForBucle();
       break;
       }
     case RETURN:{
@@ -75,14 +70,14 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     case INT:
     case FLOAT:
     case STRING:
-    case I_PARENTESIS:
+    case PARENTESIS_I:
     case MAS:
     case MENOS:{
       ExpressionStatement();
       break;
       }
     case FUNCTION:{
-      FunctionDeclare();
+      FunDeclaracion();
       break;
       }
     case CONSOLE:{
@@ -96,20 +91,76 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     }
 }
 
-  final public void FunctionDeclare() throws ParseException {
+//Declaracion de una variable ---------
+  final public void VarDeclaracion() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case VAR:{
+      jj_consume_token(VAR);
+      break;
+      }
+    case LET:{
+      jj_consume_token(LET);
+      break;
+      }
+    case CONST:{
+      jj_consume_token(CONST);
+      break;
+      }
+    default:
+      jj_la1[2] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    jj_consume_token(IDENTIFICADOR);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IGUAL:{
+      jj_consume_token(IGUAL);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case IDENTIFICADOR:{
+        LlamarFuncion();
+        break;
+        }
+      case INT:
+      case FLOAT:
+      case STRING:{
+        DatosBasicos();
+        break;
+        }
+      default:
+        jj_la1[3] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      break;
+      }
+    default:
+      jj_la1[4] = jj_gen;
+      ;
+    }
+    jj_consume_token(PUNTO_Y_COMA);
+}
+
+  final public void LlamarFuncion() throws ParseException {
+    jj_consume_token(IDENTIFICADOR);
+    jj_consume_token(PARENTESIS_I);
+    ParameterList();
+    jj_consume_token(PARENTESIS_D);
+}
+
+  final public void FunDeclaracion() throws ParseException {
     jj_consume_token(FUNCTION);
     jj_consume_token(IDENTIFICADOR);
-    jj_consume_token(I_PARENTESIS);
+    jj_consume_token(PARENTESIS_I);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case IDENTIFICADOR:{
       ParameterList();
       break;
       }
     default:
-      jj_la1[2] = jj_gen;
+      jj_la1[5] = jj_gen;
       ;
     }
-    jj_consume_token(D_PARENTESIS);
+    jj_consume_token(PARENTESIS_D);
     Block();
 }
 
@@ -123,7 +174,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
         break;
         }
       default:
-        jj_la1[3] = jj_gen;
+        jj_la1[6] = jj_gen;
         break label_2;
       }
       jj_consume_token(COMA);
@@ -149,15 +200,14 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       case INT:
       case FLOAT:
       case STRING:
-      case I_PARENTESIS:
-      case LLAVE_IZQ:
+      case PARENTESIS_I:
       case MAS:
       case MENOS:{
         ;
         break;
         }
       default:
-        jj_la1[4] = jj_gen;
+        jj_la1[7] = jj_gen;
         break label_3;
       }
       Statement();
@@ -165,44 +215,11 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     jj_consume_token(LLAVE_DER);
 }
 
-  final public void VariableDeclaration() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case VAR:{
-      jj_consume_token(VAR);
-      break;
-      }
-    case LET:{
-      jj_consume_token(LET);
-      break;
-      }
-    case CONST:{
-      jj_consume_token(CONST);
-      break;
-      }
-    default:
-      jj_la1[5] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    jj_consume_token(IDENTIFICADOR);
-    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case IGUAL:{
-      jj_consume_token(IGUAL);
-      Expression();
-      break;
-      }
-    default:
-      jj_la1[6] = jj_gen;
-      ;
-    }
-    jj_consume_token(PUNTO_Y_COMA);
-}
-
   final public void IfStatement() throws ParseException {
     jj_consume_token(IF);
-    jj_consume_token(I_PARENTESIS);
+    jj_consume_token(PARENTESIS_I);
     Expression();
-    jj_consume_token(D_PARENTESIS);
+    jj_consume_token(PARENTESIS_D);
     Statement();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case ELSE:{
@@ -211,34 +228,34 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       break;
       }
     default:
-      jj_la1[7] = jj_gen;
+      jj_la1[8] = jj_gen;
       ;
     }
 }
 
   final public void WhileStatement() throws ParseException {
     jj_consume_token(WHILE);
-    jj_consume_token(I_PARENTESIS);
+    jj_consume_token(PARENTESIS_I);
     Expression();
-    jj_consume_token(D_PARENTESIS);
+    jj_consume_token(PARENTESIS_D);
     Statement();
 }
 
   final public void ForStatement() throws ParseException {
     jj_consume_token(FOR);
-    jj_consume_token(I_PARENTESIS);
+    jj_consume_token(PARENTESIS_I);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case CONST:
     case LET:
     case VAR:{
-      VariableDeclaration();
+      VarDeclaracion();
       break;
       }
     case IDENTIFICADOR:
     case INT:
     case FLOAT:
     case STRING:
-    case I_PARENTESIS:
+    case PARENTESIS_I:
     case PUNTO_Y_COMA:
     case MAS:
     case MENOS:{
@@ -247,21 +264,21 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       case INT:
       case FLOAT:
       case STRING:
-      case I_PARENTESIS:
+      case PARENTESIS_I:
       case MAS:
       case MENOS:{
         Expression();
         break;
         }
       default:
-        jj_la1[8] = jj_gen;
+        jj_la1[9] = jj_gen;
         ;
       }
       jj_consume_token(PUNTO_Y_COMA);
       break;
       }
     default:
-      jj_la1[9] = jj_gen;
+      jj_la1[10] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -270,23 +287,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     case INT:
     case FLOAT:
     case STRING:
-    case I_PARENTESIS:
-    case MAS:
-    case MENOS:{
-      Expression();
-      break;
-      }
-    default:
-      jj_la1[10] = jj_gen;
-      ;
-    }
-    jj_consume_token(PUNTO_Y_COMA);
-    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case IDENTIFICADOR:
-    case INT:
-    case FLOAT:
-    case STRING:
-    case I_PARENTESIS:
+    case PARENTESIS_I:
     case MAS:
     case MENOS:{
       Expression();
@@ -296,7 +297,23 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       jj_la1[11] = jj_gen;
       ;
     }
-    jj_consume_token(D_PARENTESIS);
+    jj_consume_token(PUNTO_Y_COMA);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IDENTIFICADOR:
+    case INT:
+    case FLOAT:
+    case STRING:
+    case PARENTESIS_I:
+    case MAS:
+    case MENOS:{
+      Expression();
+      break;
+      }
+    default:
+      jj_la1[12] = jj_gen;
+      ;
+    }
+    jj_consume_token(PARENTESIS_D);
     Statement();
 }
 
@@ -307,14 +324,14 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     case INT:
     case FLOAT:
     case STRING:
-    case I_PARENTESIS:
+    case PARENTESIS_I:
     case MAS:
     case MENOS:{
       Expression();
       break;
       }
     default:
-      jj_la1[12] = jj_gen;
+      jj_la1[13] = jj_gen;
       ;
     }
     jj_consume_token(PUNTO_Y_COMA);
@@ -325,9 +342,9 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     jj_consume_token(CONSOLE);
     jj_consume_token(PUNTO);
     jj_consume_token(LOG);
-    jj_consume_token(I_PARENTESIS);
+    jj_consume_token(PARENTESIS_I);
     Contenido();
-    jj_consume_token(D_PARENTESIS);
+    jj_consume_token(PARENTESIS_D);
     jj_consume_token(PUNTO_Y_COMA);
 }
 
@@ -346,7 +363,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
         break;
         }
       default:
-        jj_la1[13] = jj_gen;
+        jj_la1[14] = jj_gen;
         break label_4;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -363,7 +380,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
         break;
         }
       default:
-        jj_la1[14] = jj_gen;
+        jj_la1[15] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -383,7 +400,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       break;
       }
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[16] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -407,7 +424,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       break;
       }
     default:
-      jj_la1[16] = jj_gen;
+      jj_la1[17] = jj_gen;
       ;
     }
 }
@@ -421,15 +438,15 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 79:{
+      case OR_LOGICO:{
         ;
         break;
         }
       default:
-        jj_la1[17] = jj_gen;
+        jj_la1[18] = jj_gen;
         break label_5;
       }
-      jj_consume_token(79);
+      jj_consume_token(OR_LOGICO);
       AndExpression();
     }
 }
@@ -439,15 +456,15 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 80:{
+      case AND_LOGICO:{
         ;
         break;
         }
       default:
-        jj_la1[18] = jj_gen;
+        jj_la1[19] = jj_gen;
         break label_6;
       }
-      jj_consume_token(80);
+      jj_consume_token(AND_LOGICO);
       EqualityExpression();
     }
 }
@@ -457,26 +474,26 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     label_7:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case EQ:
-      case NEQ:{
+      case ES_IGUAL:
+      case NO_ES_IGUAL:{
         ;
         break;
         }
       default:
-        jj_la1[19] = jj_gen;
+        jj_la1[20] = jj_gen;
         break label_7;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case EQ:{
-        jj_consume_token(EQ);
+      case ES_IGUAL:{
+        jj_consume_token(ES_IGUAL);
         break;
         }
-      case NEQ:{
-        jj_consume_token(NEQ);
+      case NO_ES_IGUAL:{
+        jj_consume_token(NO_ES_IGUAL);
         break;
         }
       default:
-        jj_la1[20] = jj_gen;
+        jj_la1[21] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -489,36 +506,36 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case LT:
-      case GT:
-      case LTE:
-      case GTE:{
+      case MENOR:
+      case MAYOR:
+      case MENOR_IGUAL_QUE:
+      case MAYOR_IGUAL_QUE:{
         ;
         break;
         }
       default:
-        jj_la1[21] = jj_gen;
+        jj_la1[22] = jj_gen;
         break label_8;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case LT:{
-        jj_consume_token(LT);
+      case MENOR:{
+        jj_consume_token(MENOR);
         break;
         }
-      case GT:{
-        jj_consume_token(GT);
+      case MAYOR:{
+        jj_consume_token(MAYOR);
         break;
         }
-      case LTE:{
-        jj_consume_token(LTE);
+      case MENOR_IGUAL_QUE:{
+        jj_consume_token(MENOR_IGUAL_QUE);
         break;
         }
-      case GTE:{
-        jj_consume_token(GTE);
+      case MAYOR_IGUAL_QUE:{
+        jj_consume_token(MAYOR_IGUAL_QUE);
         break;
         }
       default:
-        jj_la1[22] = jj_gen;
+        jj_la1[23] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -537,7 +554,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
         break;
         }
       default:
-        jj_la1[23] = jj_gen;
+        jj_la1[24] = jj_gen;
         break label_9;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -550,7 +567,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
         break;
         }
       default:
-        jj_la1[24] = jj_gen;
+        jj_la1[25] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -570,7 +587,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
         break;
         }
       default:
-        jj_la1[25] = jj_gen;
+        jj_la1[26] = jj_gen;
         break label_10;
       }
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -587,7 +604,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
         break;
         }
       default:
-        jj_la1[26] = jj_gen;
+        jj_la1[27] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -611,12 +628,12 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
     case INT:
     case FLOAT:
     case STRING:
-    case I_PARENTESIS:{
+    case PARENTESIS_I:{
       PrimaryExpression();
       break;
       }
     default:
-      jj_la1[27] = jj_gen;
+      jj_la1[28] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -640,20 +657,22 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       jj_consume_token(STRING);
       break;
       }
-    case I_PARENTESIS:{
-      jj_consume_token(I_PARENTESIS);
+    case PARENTESIS_I:{
+      jj_consume_token(PARENTESIS_I);
       Expression();
-      jj_consume_token(D_PARENTESIS);
+      jj_consume_token(PARENTESIS_D);
       break;
       }
     default:
-      jj_la1[28] = jj_gen;
+      jj_la1[29] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
 }
 
-  final public void DatosBasicos() throws ParseException {
+//Falta checar bien lo de For
+  final public 
+void DatosBasicos() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case INT:{
       jj_consume_token(INT);
@@ -672,7 +691,180 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
       break;
       }
     default:
-      jj_la1[29] = jj_gen;
+      jj_la1[30] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+}
+
+// Bucle for
+  final public void ForBucle() throws ParseException {
+    jj_consume_token(FOR);
+    jj_consume_token(PARENTESIS_I);
+    ContenidoFor();
+    jj_consume_token(PARENTESIS_D);
+    Block();
+    jj_consume_token(PUNTO_Y_COMA);
+}
+
+//Lo que va dentro del for
+  final public void ContenidoFor() throws ParseException {
+    ForInicial();
+    jj_consume_token(PUNTO_Y_COMA);
+    ForCondicion();
+    jj_consume_token(PUNTO_Y_COMA);
+    ForFinal();
+}
+
+//si se  inicializa una variable o nel
+  final public void ForInicial() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case LET:
+    case IDENTIFICADOR:{
+      DeclaracionFor();
+      break;
+      }
+    default:
+      jj_la1[31] = jj_gen;
+      ;
+    }
+}
+
+//La condición que se debe cumplir
+  final public void ForCondicion() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IDENTIFICADOR:{
+      jj_consume_token(IDENTIFICADOR);
+      CondicionalesAsignacion();
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case IDENTIFICADOR:{
+        jj_consume_token(IDENTIFICADOR);
+        break;
+        }
+      case INT:{
+        jj_consume_token(INT);
+        break;
+        }
+      case FLOAT:{
+        jj_consume_token(FLOAT);
+        break;
+        }
+      default:
+        jj_la1[32] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      break;
+      }
+    case INT:
+    case FLOAT:{
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case IDENTIFICADOR:{
+        jj_consume_token(IDENTIFICADOR);
+        break;
+        }
+      case INT:{
+        jj_consume_token(INT);
+        break;
+        }
+      case FLOAT:{
+        jj_consume_token(FLOAT);
+        break;
+        }
+      default:
+        jj_la1[33] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      CondicionalesAsignacion();
+      jj_consume_token(IDENTIFICADOR);
+      break;
+      }
+    default:
+      jj_la1[34] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+}
+
+  final public void ForFinal() throws ParseException {
+    jj_consume_token(IDENTIFICADOR);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case INCREMENTO:{
+      jj_consume_token(INCREMENTO);
+      break;
+      }
+    case DECREMENTO:{
+      jj_consume_token(DECREMENTO);
+      break;
+      }
+    default:
+      jj_la1[35] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+}
+
+  final public void DeclaracionFor() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case LET:{
+      jj_consume_token(LET);
+      break;
+      }
+    default:
+      jj_la1[36] = jj_gen;
+      ;
+    }
+    jj_consume_token(IDENTIFICADOR);
+    jj_consume_token(IGUAL);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case IDENTIFICADOR:{
+      jj_consume_token(IDENTIFICADOR);
+      break;
+      }
+    case INT:{
+      jj_consume_token(INT);
+      break;
+      }
+    case FLOAT:{
+      jj_consume_token(FLOAT);
+      break;
+      }
+    default:
+      jj_la1[37] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+}
+
+  final public void CondicionalesAsignacion() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case ES_IGUAL:{
+      jj_consume_token(ES_IGUAL);
+      break;
+      }
+    case NO_ES_IGUAL:{
+      jj_consume_token(NO_ES_IGUAL);
+      break;
+      }
+    case MENOR:{
+      jj_consume_token(MENOR);
+      break;
+      }
+    case MAYOR:{
+      jj_consume_token(MAYOR);
+      break;
+      }
+    case MENOR_IGUAL_QUE:{
+      jj_consume_token(MENOR_IGUAL_QUE);
+      break;
+      }
+    case MAYOR_IGUAL_QUE:{
+      jj_consume_token(MAYOR_IGUAL_QUE);
+      break;
+      }
+    default:
+      jj_la1[38] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -687,23 +879,28 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[30];
+  final private int[] jj_la1 = new int[39];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
+  static private int[] jj_la1_3;
   static {
 	   jj_la1_init_0();
 	   jj_la1_init_1();
 	   jj_la1_init_2();
+	   jj_la1_init_3();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x7003000,0x7003000,0x0,0x0,0x7003000,0x2000,0x0,0x40000,0x0,0x2000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+	   jj_la1_0 = new int[] {0x7003000,0x7003000,0x2000,0x0,0x0,0x0,0x0,0x7003000,0x40000,0x0,0x2000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x17ca0101,0x17ca0101,0x400000,0x0,0x17ca0101,0x20001,0x0,0x0,0x7c00000,0x7c20001,0x7c00000,0x7c00000,0x7c00000,0x3c00000,0x3c00000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7c00000,0x7c00000,0x3c00000,};
+	   jj_la1_1 = new int[] {0x7ca0101,0x7ca0101,0x20001,0x3c00000,0x0,0x400000,0x0,0x7ca0101,0x0,0x7c00000,0x7c20001,0x7c00000,0x7c00000,0x7c00000,0x3c00000,0x3c00000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7c00000,0x7c00000,0x3c00000,0x400001,0x1c00000,0x1c00000,0x1c00000,0x0,0x1,0x1c00000,0x0,};
 	}
 	private static void jj_la1_init_2() {
-	   jj_la1_2 = new int[] {0x18,0x18,0x0,0x2,0x18,0x0,0x100,0x0,0x18,0x19,0x18,0x18,0x18,0xa,0xa,0xa,0x100,0x8000,0x10000,0x600,0x600,0x7800,0x7800,0x18,0x18,0xe0,0xe0,0x18,0x0,0x0,};
+	   jj_la1_2 = new int[] {0x18,0x18,0x0,0x0,0x100,0x0,0x2,0x18,0x0,0x18,0x19,0x18,0x18,0x18,0xa,0xa,0xa,0x100,0x10000000,0x8000000,0x180000,0x180000,0x1e00000,0x1e00000,0x18,0x18,0xe0,0xe0,0x18,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1f80000,};
+	}
+	private static void jj_la1_init_3() {
+	   jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc,0x0,0x0,0x0,};
 	}
 
   /** Constructor with InputStream. */
@@ -717,7 +914,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 30; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 39; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -731,7 +928,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 30; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 39; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -741,7 +938,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 30; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 39; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -759,7 +956,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 30; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 39; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -768,7 +965,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 30; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 39; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -777,7 +974,7 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 30; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 39; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -828,12 +1025,12 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[81];
+	 boolean[] la1tokens = new boolean[100];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
 	 }
-	 for (int i = 0; i < 30; i++) {
+	 for (int i = 0; i < 39; i++) {
 	   if (jj_la1[i] == jj_gen) {
 		 for (int j = 0; j < 32; j++) {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -845,10 +1042,13 @@ public class JavaScriptLexer implements JavaScriptLexerConstants {
 		   if ((jj_la1_2[i] & (1<<j)) != 0) {
 			 la1tokens[64+j] = true;
 		   }
+		   if ((jj_la1_3[i] & (1<<j)) != 0) {
+			 la1tokens[96+j] = true;
+		   }
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 81; i++) {
+	 for (int i = 0; i < 100; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;

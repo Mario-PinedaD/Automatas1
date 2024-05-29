@@ -114,9 +114,9 @@ public interface JavaScriptLexerConstants {
   /** RegularExpression Id. */
   int STRING = 57;
   /** RegularExpression Id. */
-  int I_PARENTESIS = 58;
+  int PARENTESIS_I = 58;
   /** RegularExpression Id. */
-  int D_PARENTESIS = 59;
+  int PARENTESIS_D = 59;
   /** RegularExpression Id. */
   int LLAVE_IZQ = 60;
   /** RegularExpression Id. */
@@ -144,17 +144,59 @@ public interface JavaScriptLexerConstants {
   /** RegularExpression Id. */
   int IGUAL = 72;
   /** RegularExpression Id. */
-  int EQ = 73;
+  int EXPONENCIAL = 73;
   /** RegularExpression Id. */
-  int NEQ = 74;
+  int A_SUMA = 74;
   /** RegularExpression Id. */
-  int LT = 75;
+  int A_RESTA = 75;
   /** RegularExpression Id. */
-  int GT = 76;
+  int A_MULTIPLICACION = 76;
   /** RegularExpression Id. */
-  int LTE = 77;
+  int A_DIVISION = 77;
   /** RegularExpression Id. */
-  int GTE = 78;
+  int A_MODULO = 78;
+  /** RegularExpression Id. */
+  int A_EXPONENCIACION = 79;
+  /** RegularExpression Id. */
+  int A_AND = 80;
+  /** RegularExpression Id. */
+  int A_OR = 81;
+  /** RegularExpression Id. */
+  int A_XOR = 82;
+  /** RegularExpression Id. */
+  int ES_IGUAL = 83;
+  /** RegularExpression Id. */
+  int NO_ES_IGUAL = 84;
+  /** RegularExpression Id. */
+  int MENOR = 85;
+  /** RegularExpression Id. */
+  int MAYOR = 86;
+  /** RegularExpression Id. */
+  int MENOR_IGUAL_QUE = 87;
+  /** RegularExpression Id. */
+  int MAYOR_IGUAL_QUE = 88;
+  /** RegularExpression Id. */
+  int IGUALDAD_ESTRICTA = 89;
+  /** RegularExpression Id. */
+  int DESIGUALDAD_ESTRICTA = 90;
+  /** RegularExpression Id. */
+  int AND_LOGICO = 91;
+  /** RegularExpression Id. */
+  int OR_LOGICO = 92;
+  /** RegularExpression Id. */
+  int NOT_LOGICO = 93;
+  /** RegularExpression Id. */
+  int AND_BIT = 94;
+  /** RegularExpression Id. */
+  int OR_BIT = 95;
+  /** RegularExpression Id. */
+  int XOR_BIT = 96;
+  /** RegularExpression Id. */
+  int NOT_BIT = 97;
+  /** RegularExpression Id. */
+  int INCREMENTO = 98;
+  /** RegularExpression Id. */
+  int DECREMENTO = 99;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -234,14 +276,33 @@ public interface JavaScriptLexerConstants {
     "\"/\"",
     "\"%\"",
     "\"=\"",
+    "\"**\"",
+    "\"+=\"",
+    "\"-=\"",
+    "\"*=\"",
+    "\"/=\"",
+    "\"%=\"",
+    "\"**=\"",
+    "\"&=\"",
+    "\"|=\"",
+    "\"^=\"",
     "\"==\"",
     "\"!=\"",
     "\"<\"",
     "\">\"",
     "\"<=\"",
     "\">=\"",
-    "\"||\"",
+    "\"===\"",
+    "\"!==\"",
     "\"&&\"",
+    "\"||\"",
+    "\"!\"",
+    "\"&\"",
+    "\"|\"",
+    "\"^\"",
+    "\"~\"",
+    "\"++\"",
+    "\"--\"",
   };
 
 }

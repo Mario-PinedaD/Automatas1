@@ -1,27 +1,25 @@
-// Función que suma un número float y un int
-function sumarFloatYInt() {
-    // Declaración de variables
-    let numeroFloat = 3.14; // Número flotante
-    let numeroInt = 5;      // Número entero
+// Declaración de variables
+let a = 5;
+let b = 10;
 
-    // Realizar la suma
-    let resultado = numeroFloat + numeroInt;
-
-    // Mostrar el resultado
-    console.log("La suma de " + numeroFloat + " y " + numeroInt + " es: " + resultado);
-    console.log("Jose",luis,"mario");
-    console.log("Esta es una prueba con", 9+10," las 2 maneras");
+// Función de suma
+function suma(x, y) {
+  return x + y;
 }
 
-// Función que muestra un contador del 1 al 10
-function mostrarContador() {
-    // Bucle for para contar del 1 al 10
-    for (let i = 1; i <= 10; i++) {
-        console.log("Contador: " + i);
-    }
+// Uso de la función de suma
+let resultado = suma(a, b);
+console.log('La suma de ${a} y ${b} es ${resultado}');
+
+// Bucle for que muestra números del 1 al 10
+console.log("Números del 1 al 10:");
+for (let i = 1; i <= 10; i++) {
+  console.log(i);
 }
 
-// Llamada a las funciones para su ejecución
-sumarFloatYInt();
-mostrarContador();
+// Bucle for que muestra números del 10 al 1
+console.log("Números del 10 al 1:");
+for (let i = 10; i >= 1; i--) {
+  console.log(i);
+}
 

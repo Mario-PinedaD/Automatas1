@@ -14,6 +14,8 @@ public class Analizador_sintactico {
     public static void main(String[] args) {
         // Ruta del archivo a analizar
         String filePath = "./arch_prueba.js";
+        //String filePath = "./arch_prueba2.js";
+        //String filePath = "./arch_prueba_vacio.js";
 
         try {
             // Abre un flujo de entrada desde el archivo especificado
@@ -28,7 +30,7 @@ public class Analizador_sintactico {
                 System.out.println("La sintaxis del archivo es correcta.");
             } catch (ParseException e) {
                 // Si se lanza una ParseException, la sintaxis es incorrecta
-                System.out.println("Error de sintaxis: " + e.getMessage());
+                System.out.println("Error de sintaxis en el archivo: " + e.getMessage());
             }
 
         } catch (FileNotFoundException e) {
