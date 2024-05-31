@@ -2,9 +2,7 @@ options {
 // Indica que el analizador ignora o no las diferencias en mayusculas y minusculas.
   IGNORE_CASE = false;
   STATIC = false;
-  LOOKAHEAD = 4;
-  //BUILD_PARSER = true;
-  //FORCE_LA_CHECK = true;
+  LOOKAHEAD = 2;
 }
 
 PARSER_BEGIN(JavaScriptParser)
@@ -19,8 +17,8 @@ PARSER_END(JavaScriptParser)
 /** Espacios en blanco y comentarios */
 SKIP : {
       " "
-    | "\t" 
-    | "\r" 
+    | "\t"
+    | "\r"
     | "\n"
     | < "/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/" > // Comentarios multilínea
     | < "//" (~["\r", "\n"])* ("\r" | "\n") > // Comentarios de una línea
@@ -38,7 +36,7 @@ TOKEN : {
   | < CONST: "const" >          {System.out.println("CONST -> " + image );}
   | < CONTINUE: "continue" >    {System.out.println("CONTINUE -> " + image );}
   | < DEBUGGER: "debugger" >    {System.out.println("DEBUGGER -> " + image );}
-  | < DEFAUL: "default" >       {System.out.println("DEFAULT -> " + image );}
+  | < DEFAUL: "default" >   {System.out.println("DEFAULT -> " + image );}
   | < DELETE: "delete" >        {System.out.println("DELETE -> " + image );}
   | < DO: "do" >                {System.out.println("DO -> " + image );}
   | < ELSE: "else" >            {System.out.println("ELSE -> " + image );}
@@ -79,81 +77,64 @@ TOKEN : {
   | < YIELD: "yield" >          {System.out.println("YIELD -> " + image );}
 
     //Tokens generales como, identificadores, enteros, flotantes y cadenas.
-  | < IDENTIFICADOR: (["a"-"z", "A"-"Z", "_"]) (["a"-"z", "A"-"Z", "0"-"9", "_"])* > {System.out.println("IDENTIFICADOR -> " + image );}
-  | < INT: (["0"-"9"])+ > {System.out.println("INT -> " + image );}
-  | < FLOAT: (["0"-"9"])+ "." (["0"-"9"])* > {System.out.println("FLOAT -> " + image );}
-  | < STRING: ("\"" (~["\""])* "\"") | ("\'" (~["\""])* "\'")> {System.out.println("STRING -> " + image );}
+    | < IDENTIFICADOR: (["a"-"z", "A"-"Z", "_"]) (["a"-"z", "A"-"Z", "0"-"9", "_"])* > {System.out.println("IDENTIFICADOR -> " + image);}
+    | < INT: (["0"-"9"])+ > {System.out.println("INT -> " + image);}
+    | < FLOAT: (["0"-"9"])+ "." (["0"-"9"])* > {System.out.println("FLOAT -> " + image);}
+    | < STRING: ("\"" (~["\""])* "\"") | ("\'" (~["\""])* "\'")> {System.out.println("STRING -> " + image);}
 
-  | < PARENTESIS_I: "(" > {System.out.println("PARENTESIS_I -> " + image );}
-  | < PARENTESIS_D: ")" > {System.out.println("PARENTESIS_D -> " + image );}
-  | < LLAVE_IZQ: "{" > {System.out.println("LLAVE_IZQ -> " + image );}
-  | < LLAVE_DER: "}" > {System.out.println("LLAVE_DER -> " + image );}
-  | < CORCHETE_IZQ: "[" > {System.out.println("CORCHETE_IZQ -> " + image );}
-  | < CORCHETE_DER: "]" > {System.out.println("CORCHETE_DER -> " + image );}
-  | < PUNTO_Y_COMA: ";" > {System.out.println("PUNTO_Y_COMA -> " + image ); }
-  | < DOS_PUNTOS: ":"> {System.out.println("DOS_PUNTOS -> " + image );}
-  | < COMA: "," > {System.out.println("COMA -> " + image );}
-  | < PUNTO: "." > {System.out.println("PUNTO -> " + image );}
+    | < PARENTESIS_I: "(" > {System.out.println("PARENTESIS_I -> " + image);}
+    | < PARENTESIS_D: ")" > {System.out.println("PARENTESIS_D -> " + image);}
+    | < LLAVE_IZQ: "{" > {System.out.println("LLAVE_IZQ -> " + image);}
+    | < LLAVE_DER: "}" > {System.out.println("LLAVE_DER -> " + image);}
+    | < CORCHETE_IZQ: "[" > {System.out.println("CORCHETE_IZQ -> " + image);}
+    | < CORCHETE_DER: "]" > {System.out.println("CORCHETE_DER -> " + image);}
+    | < PUNTO_Y_COMA: ";" > {System.out.println("PUNTO_Y_COMA -> " + image );}
+    | < DOS_PUNTOS: ":"> {System.out.println("DOS_PUNTOS -> " + image);}
+    | < COMA: "," > {System.out.println("COMA -> " + image);}
+    | < PUNTO: "." > {System.out.println("PUNTO -> " + image);}
 
-    //Operadores
-    //Operadores Matematicos
-  | < MAS: "+" > {System.out.println("MAS -> " + image );}
-  | < MENOS: "-" > {System.out.println("MENOS -> " + image );}
-  | < MULT: "*" > {System.out.println("MULT -> " + image );}
-  | < DIV: "/" > {System.out.println("DIV -> " + image );}
-  | < MOD: "%" > {System.out.println("MOD -> " + image );}
-  | < IGUAL: "=" > {System.out.println("IGUAL -> " + image );}
-  | < EXPONENCIAL: "**"> {System.out.println("EXPONENCIAL -> " + image );}
-    // Operadores de Asignacion
-  | < A_SUMA: "+=" > {System.out.println("A_SUMA -> " + image );}
-  | < A_RESTA: "-=" > {System.out.println("A_RESTA -> " + image );}
-  | < A_MULTIPLICACION: "*=" > {System.out.println("A_MULTIPLICACION -> " + image );}
-  | < A_DIVISION: "/=" > {System.out.println("A_DIVISION -> " + image );}
-  | < A_MODULO: "%=" > {System.out.println("A_MODULO -> " + image );}
-  | < A_EXPONENCIACION: "**=" > {System.out.println("A_EXPONENCIACION -> " + image );}
-  | < A_AND: "&=" > {System.out.println("A_AND -> " + image );}
-  | < A_OR: "|=" > {System.out.println("A_OR -> " + image );}
-  | < A_XOR: "^=" > {System.out.println("A_XOR -> " + image );}
-  | < ES_IGUAL: "==" > {System.out.println("ES_IGUAL -> " + image );}
-  | < NO_ES_IGUAL: "!=" > {System.out.println("NO_ES_IGUAL -> " + image );}
-  | < MENOR: "<" > {System.out.println("MENOR -> " + image );}
-  | < MAYOR: ">" > {System.out.println("MAYOR -> " + image );}
-  | < MENOR_IGUAL_QUE: "<=" > {System.out.println("MENOR_IGUAL_QUE -> " + image );}
-  | < MAYOR_IGUAL_QUE: ">=" > {System.out.println("MAYOR_IGUAL_QUE -> " + image );}
-  | < IGUALDAD_ESTRICTA: "===" > {System.out.println("IGUALDAD_ESTRICTA -> " + image );}
-  | < DESIGUALDAD_ESTRICTA: "!==" > {System.out.println("DESIGUALDAD_ESTRICTA -> " + image );}
-  | < AND_LOGICO: "&&" > {System.out.println("AND_LOGICO -> " + image );}
-  | < OR_LOGICO: "||" > {System.out.println("OR_LOGICO -> " + image );}
-  | < NOT_LOGICO: "!" > {System.out.println("NOT_LOGICO -> " + image );}
-  | < AND_BIT: "&" > {System.out.println("AND_BIT -> " + image );}
-  | < OR_BIT: "|" > {System.out.println("OR_BIT -> " + image );}
-  | < XOR_BIT: "^" > {System.out.println("XOR_BIT -> " + image );}
-  | < NOT_BIT: "~" > {System.out.println("NOT_BIT -> " + image );}
-  | < INCREMENTO: "++" > {System.out.println("INCREMENTO -> " + image );}
-  | < DECREMENTO: "--" > {System.out.println("DECREMENTO -> " + image );}
+      //Operadores
+      //Operadores Matematicos
+    | < MAS: "+" > {System.out.println("MAS -> " + image);}
+    | < MENOS: "-" > {System.out.println("MENOS -> " + image);}
+    | < MULT: "*" > {System.out.println("MULT -> " + image);}
+    | < DIV: "/" > {System.out.println("DIV -> " + image);}
+    | < MOD: "%" > {System.out.println("MOD -> " + image);}
+    | < IGUAL: "=" > {System.out.println("IGUAL -> " + image);}
+    | < EXPONENCIAL: "**"> {System.out.println("EXPONENCIAL -> " + image);}
+      // Operadores de Asignacion
+    | < A_SUMA: "+=" > {System.out.println("A_SUMA -> " + image);}
+    | < A_RESTA: "-=" > {System.out.println("A_RESTA -> " + image);}
+    | < A_MULTIPLICACION: "*=" > {System.out.println("A_MULTIPLICACION -> " + image);}
+    | < A_DIVISION: "/=" > {System.out.println("A_DIVISION -> " + image);}
+    | < A_MODULO: "%=" > {System.out.println("A_MODULO -> " + image);}
+    | < A_EXPONENCIACION: "**=" > {System.out.println("A_EXPONENCIACION -> " + image);}
+    | < A_AND: "&=" > {System.out.println("A_AND -> " + image);}
+    | < A_OR: "|=" > {System.out.println("A_OR -> " + image);}
+    | < A_XOR: "^=" > {System.out.println("A_XOR -> " + image);}
+    | < ES_IGUAL: "==" > {System.out.println("ES_IGUAL -> " + image);}
+    | < NO_ES_IGUAL: "!=" > {System.out.println("NO_ES_IGUAL -> " + image);}
+    | < MENOR: "<" > {System.out.println("MENOR -> " + image);}
+    | < MAYOR: ">" > {System.out.println("MAYOR -> " + image);}
+    | < MENOR_IGUAL_QUE: "<=" > {System.out.println("MENOR_IGUAL_QUE -> " + image);}
+    | < MAYOR_IGUAL_QUE: ">=" > {System.out.println("MAYOR_IGUAL_QUE -> " + image);}
+    | < IGUALDAD_ESTRICTA: "===" > {System.out.println("IGUALDAD_ESTRICTA -> " + image);}
+    | < DESIGUALDAD_ESTRICTA: "!==" > {System.out.println("DESIGUALDAD_ESTRICTA -> " + image);}
+    | < AND_LOGICO: "&&" > {System.out.println("AND_LOGICO -> " + image);}
+    | < OR_LOGICO: "||" > {System.out.println("OR_LOGICO -> " + image);}
+    | < NOT_LOGICO: "!" > {System.out.println("NOT_LOGICO -> " + image);}
+    | < AND_BIT: "&" > {System.out.println("AND_BIT -> " + image);}
+    | < OR_BIT: "|" > {System.out.println("OR_BIT -> " + image);}
+    | < XOR_BIT: "^" > {System.out.println("XOR_BIT -> " + image);}
+    | < NOT_BIT: "~" > {System.out.println("NOT_BIT -> " + image);}
+    | < INCREMENTO: "++" > {System.out.println("INCREMENTO -> " + image);}
+    | < DECREMENTO: "--" > {System.out.println("DECREMENTO -> " + image);}
 }
-
 
 /** Reglas de producción */
 void Program() : {} {
   (Statement())* <EOF>
 }
-
-/* void Statement() :{} {
-    VariableStatement()
-  | VariableAsignacion()
-  | IfStatement()
-  | WhileStatement()
-  | ForStatement()
-  | DoWhileStatement()
-  | ReturnStatement()       //Retorno de algo (no confundir con la impresion)
-  | ExpressionStatement()
-  | FunctionStatement()     //Declaracion de una funcion
-  | ConsoleStatement()      //Declaracion de imprimir
-  | SwitchStatement()
-  | BreakStatement()
-  | FunctionShowStatement()
-}*/
 
 void Statement() :{} {
     VariableStatement()
@@ -169,41 +150,17 @@ void Statement() :{} {
 }
 
 void VariableStatement() : {} {
-  (<VAR> | <LET> | <CONST>)  Variablecont() <PUNTO_Y_COMA>
+  (<VAR> | <LET> | <CONST>) <IDENTIFICADOR> ( <IGUAL> (LlamarFuncion() | DatosCompletos() ) )? <PUNTO_Y_COMA>
 }
 
-void Variablecont() : {} {
-     <IDENTIFICADOR> ( <IGUAL> (FunctionShowStatement() | DatosCompletos() | ArrayDeclaration() ))?
-   | ArrayCont()
-   | VariableAsignacion()
-   | VariableMultiple()
-}
+//Debo considerar el hecho de que, se puedan declarar varias funciones en un solo método,
 
-void VariableMultiple() : {} {
-    <IDENTIFICADOR> ( <COMA> <IDENTIFICADOR> )*
-}
-/*
-void VariableAsignacion(): {} {
-    <IDENTIFICADOR> ( <IGUAL> <IDENTIFICADOR> )+ DatosCompletos() <PUNTO_Y_COMA>
-}
-*/
-void VariableAsignacion() : {} {
-    <IDENTIFICADOR> ( <IGUAL> AssignmentExpression() )+ <PUNTO_Y_COMA>
-}
 
 //Un metodo que devuelve una "funcion" únicamente para guardarlo en una variable
-void FunctionShowStatement() : {} {
+void LlamarFuncion() : {} {
     <IDENTIFICADOR> <PARENTESIS_I> ParameterList() <PARENTESIS_D>
 }
 
-
-void ArrayDeclaration() : {} {
-    <CORCHETE_IZQ> [ArrayCont()] (ArrayDeclaration() )* <CORCHETE_DER>
-}
-
-void ArrayCont() : {} {
-    DatosCompletos() (<COMA> DatosCompletos() )*
-}
 
 //Pa que chambee el console.log
 void ConsoleStatement() : {} {
@@ -223,22 +180,19 @@ void Bloque() : {} {
 }
 
 void IfStatement() : {} {
-  <IF> <PARENTESIS_I> Expression() <PARENTESIS_D> Bloque() ( <ELSE> (Bloque() | IfStatement() ) )?
-}
-
-void ForStatement() : {} {
-  <FOR> <PARENTESIS_I> ( VariableStatement() | [Expression()] ) <PUNTO_Y_COMA> [Expression()] <PUNTO_Y_COMA> [Expression()] <PARENTESIS_D> Bloque()
+  <IF> <PARENTESIS_I> Expression() <PARENTESIS_D> Bloque() ( <ELSE> (Bloque() | IfStatement() ) )? //Checar si cambiar Statement() por Bloque()
 }
 
 void WhileStatement() : {} {
-  <WHILE> <PARENTESIS_I> ( Expression() | Booleans() ) <PARENTESIS_D> Bloque() //Checar si cambiar por Bloque()
+  <WHILE> <PARENTESIS_I> Expression() <PARENTESIS_D> Bloque() //Checar si cambiar por Bloque()
 }
 
-void DoWhileStatement() : {} {
-    <DO> Bloque() <WHILE> <PARENTESIS_I>  Expression() <PARENTESIS_D> <PUNTO_Y_COMA>
+void ForStatement() : {} {
+  <FOR> <PARENTESIS_I> ( VariableStatement() | [Expression()] <PUNTO_Y_COMA> ) [Expression()] <PUNTO_Y_COMA> [Expression()] <PARENTESIS_D> Bloque() //Checar si cambiar por Bloque()
 }
+
 void SwitchStatement() : {} {
-    <SWITCH> <PARENTESIS_I> Expression() <PARENTESIS_D> <LLAVE_IZQ> (CaseClause())* (DefaultClause())? <LLAVE_DER>
+    <SWITCH> <PARENTESIS_I> (Expression() | Booleano() ) <PARENTESIS_D> <LLAVE_IZQ> (CaseClause())* (DefaultClause())? <LLAVE_DER>
 }
 
 void CaseClause() : {} {
@@ -254,11 +208,11 @@ void BreakStatement(): {}{
 }
 
 void ReturnStatement() : {} {
-    <RETURN> [Expression()] <PUNTO_Y_COMA> 
+    <RETURN> [Expression()] <PUNTO_Y_COMA>
 }
 
 //El contenido del console.log
-void Contenido() : {} { 
+void Contenido() : {} {
     (DatosBasicos() | Concatenation())*
 }
 
@@ -272,14 +226,9 @@ void ExpressionStatement() : {} {
 void Expression() : {} {
   AssignmentExpression()
 }
-/*
+
 void AssignmentExpression() : {} {
   ConditionalExpression() ( <IGUAL> AssignmentExpression() )?
-}
-*/
-void AssignmentExpression() : {} {
-    <IDENTIFICADOR> ( <IGUAL> AssignmentExpression() )
-  | ConditionalExpression()
 }
 
 void ConditionalExpression() : {} {
@@ -329,32 +278,17 @@ void PrimaryExpression() : {} {
   | <PARENTESIS_I> Expression() <PARENTESIS_D>
 }
 
-void OperationsAlgebraic() : {} {
-      <MAS>
-    | <MENOS>
-    | <MULT>
-    | <DIV>
-    | <EXPONENCIAL>
-}
-
 void DatosCompletos(): {} {
-      <INT>
-    | <IDENTIFICADOR>
-    | <FLOAT>
-    | <STRING>
-    | <NULL>
-    | <TRUE>
-    | <FALSE>
+    DatosBasicos() | <TRUE> | <FALSE>
 }
-
-void Booleans() : {} {
+void Booleano() : {} {
     <TRUE> | <FALSE>
 }
 
 void DatosBasicos() : {} {
-      <INT> 
-    | <IDENTIFICADOR> 
-    | <FLOAT> 
-    | <STRING> 
+      <INT>
+    | <IDENTIFICADOR>
+    | <FLOAT>
+    | <STRING>
     | <NULL>
 }

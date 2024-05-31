@@ -16,3 +16,14 @@ Generales:
 Variables:
     Aceptar que puedan declararse varias variables en un mismo let/const/var
 
+
+//Va en variables
+( VariableNormal() | VariableAsignacion() | VariableMultiple() ) <PUNTO_Y_COMA>
+
+void VariableAsignacion(): {} {
+    <IDENTIFICADOR> <IGUAL> (FunctionShowStatement() | Datukis()| ArrayDeclaration())
+}
+
+void VariableMultiple() : {} {
+(<VAR> | <LET> | <CONST>) <IDENTIFICADOR> (<COMA> <IDENTIFICADOR>)* <PUNTO_Y_COMA>
+}

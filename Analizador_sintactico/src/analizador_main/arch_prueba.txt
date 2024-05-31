@@ -1,12 +1,9 @@
-// Declaración de variables
-/* COMENTARIOS
-MULTILINEAS */
 let num1 = 10;
-var num2 = 3;
-const num3 = 2;
-//let v1, v2, v3;
+var iguana = "cocodrilo";
+const prueba = prueba;
+let result;
 
-console.log("El valor de num1 es: " + num1);
+console.log("El valor de num1 es:"  + num1);
 
 // Bucle
 console.log("Ciclo for:");
@@ -20,7 +17,7 @@ while (j < 5) {
     j++;
 }
 
-function suma(a, b) {
+function suma(a, b){
     return a + b;
 }
 
@@ -50,3 +47,21 @@ switch (dia) {
 }
 console.log("El valor es = " + caso);
 
+//======================
+
+/*
+/CASOS ERRONEOS:
+function saludo(nombre {
+    console.log("Hola, " + nombre);
+}
+
+var numero = 10;
+
+if numero > 5 {
+    console.log("El número es mayor que 5");
+}
+
+for (var i = 0; i < 5; i++) {
+    console.log(i)
+}
+*/

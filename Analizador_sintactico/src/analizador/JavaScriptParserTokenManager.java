@@ -1312,10 +1312,236 @@ void TokenLexicalActions(Token matchedToken)
         lengthOfMatch = jjstrLiteralImages[54].length();
                                  System.out.println("YIELD -> " + image );
          break;
+      case 55 :
+        image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
+                                                                                        System.out.println("IDENTIFICADOR -> " + image);
+         break;
+      case 56 :
+        image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
+                             System.out.println("INT -> " + image);
+         break;
+      case 57 :
+        image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
+                                                System.out.println("FLOAT -> " + image);
+         break;
+      case 58 :
+        image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
+                                                                  System.out.println("STRING -> " + image);
+         break;
+      case 59 :
+        image.append(jjstrLiteralImages[59]);
+        lengthOfMatch = jjstrLiteralImages[59].length();
+                             System.out.println("PARENTESIS_I -> " + image);
+         break;
+      case 60 :
+        image.append(jjstrLiteralImages[60]);
+        lengthOfMatch = jjstrLiteralImages[60].length();
+                             System.out.println("PARENTESIS_D -> " + image);
+         break;
+      case 61 :
+        image.append(jjstrLiteralImages[61]);
+        lengthOfMatch = jjstrLiteralImages[61].length();
+                          System.out.println("LLAVE_IZQ -> " + image);
+         break;
+      case 62 :
+        image.append(jjstrLiteralImages[62]);
+        lengthOfMatch = jjstrLiteralImages[62].length();
+                          System.out.println("LLAVE_DER -> " + image);
+         break;
+      case 63 :
+        image.append(jjstrLiteralImages[63]);
+        lengthOfMatch = jjstrLiteralImages[63].length();
+                             System.out.println("CORCHETE_IZQ -> " + image);
+         break;
+      case 64 :
+        image.append(jjstrLiteralImages[64]);
+        lengthOfMatch = jjstrLiteralImages[64].length();
+                             System.out.println("CORCHETE_DER -> " + image);
+         break;
       case 65 :
         image.append(jjstrLiteralImages[65]);
         lengthOfMatch = jjstrLiteralImages[65].length();
-                           System.out.println("PUNTO_Y_COMA -> " + image );
+                             System.out.println("PUNTO_Y_COMA -> " + image );
+         break;
+      case 66 :
+        image.append(jjstrLiteralImages[66]);
+        lengthOfMatch = jjstrLiteralImages[66].length();
+                          System.out.println("DOS_PUNTOS -> " + image);
+         break;
+      case 67 :
+        image.append(jjstrLiteralImages[67]);
+        lengthOfMatch = jjstrLiteralImages[67].length();
+                     System.out.println("COMA -> " + image);
+         break;
+      case 68 :
+        image.append(jjstrLiteralImages[68]);
+        lengthOfMatch = jjstrLiteralImages[68].length();
+                      System.out.println("PUNTO -> " + image);
+         break;
+      case 69 :
+        image.append(jjstrLiteralImages[69]);
+        lengthOfMatch = jjstrLiteralImages[69].length();
+                    System.out.println("MAS -> " + image);
+         break;
+      case 70 :
+        image.append(jjstrLiteralImages[70]);
+        lengthOfMatch = jjstrLiteralImages[70].length();
+                      System.out.println("MENOS -> " + image);
+         break;
+      case 71 :
+        image.append(jjstrLiteralImages[71]);
+        lengthOfMatch = jjstrLiteralImages[71].length();
+                     System.out.println("MULT -> " + image);
+         break;
+      case 72 :
+        image.append(jjstrLiteralImages[72]);
+        lengthOfMatch = jjstrLiteralImages[72].length();
+                    System.out.println("DIV -> " + image);
+         break;
+      case 73 :
+        image.append(jjstrLiteralImages[73]);
+        lengthOfMatch = jjstrLiteralImages[73].length();
+                    System.out.println("MOD -> " + image);
+         break;
+      case 74 :
+        image.append(jjstrLiteralImages[74]);
+        lengthOfMatch = jjstrLiteralImages[74].length();
+                      System.out.println("IGUAL -> " + image);
+         break;
+      case 75 :
+        image.append(jjstrLiteralImages[75]);
+        lengthOfMatch = jjstrLiteralImages[75].length();
+                            System.out.println("EXPONENCIAL -> " + image);
+         break;
+      case 76 :
+        image.append(jjstrLiteralImages[76]);
+        lengthOfMatch = jjstrLiteralImages[76].length();
+                        System.out.println("A_SUMA -> " + image);
+         break;
+      case 77 :
+        image.append(jjstrLiteralImages[77]);
+        lengthOfMatch = jjstrLiteralImages[77].length();
+                         System.out.println("A_RESTA -> " + image);
+         break;
+      case 78 :
+        image.append(jjstrLiteralImages[78]);
+        lengthOfMatch = jjstrLiteralImages[78].length();
+                                  System.out.println("A_MULTIPLICACION -> " + image);
+         break;
+      case 79 :
+        image.append(jjstrLiteralImages[79]);
+        lengthOfMatch = jjstrLiteralImages[79].length();
+                            System.out.println("A_DIVISION -> " + image);
+         break;
+      case 80 :
+        image.append(jjstrLiteralImages[80]);
+        lengthOfMatch = jjstrLiteralImages[80].length();
+                          System.out.println("A_MODULO -> " + image);
+         break;
+      case 81 :
+        image.append(jjstrLiteralImages[81]);
+        lengthOfMatch = jjstrLiteralImages[81].length();
+                                   System.out.println("A_EXPONENCIACION -> " + image);
+         break;
+      case 82 :
+        image.append(jjstrLiteralImages[82]);
+        lengthOfMatch = jjstrLiteralImages[82].length();
+                       System.out.println("A_AND -> " + image);
+         break;
+      case 83 :
+        image.append(jjstrLiteralImages[83]);
+        lengthOfMatch = jjstrLiteralImages[83].length();
+                      System.out.println("A_OR -> " + image);
+         break;
+      case 84 :
+        image.append(jjstrLiteralImages[84]);
+        lengthOfMatch = jjstrLiteralImages[84].length();
+                       System.out.println("A_XOR -> " + image);
+         break;
+      case 85 :
+        image.append(jjstrLiteralImages[85]);
+        lengthOfMatch = jjstrLiteralImages[85].length();
+                          System.out.println("ES_IGUAL -> " + image);
+         break;
+      case 86 :
+        image.append(jjstrLiteralImages[86]);
+        lengthOfMatch = jjstrLiteralImages[86].length();
+                             System.out.println("NO_ES_IGUAL -> " + image);
+         break;
+      case 87 :
+        image.append(jjstrLiteralImages[87]);
+        lengthOfMatch = jjstrLiteralImages[87].length();
+                      System.out.println("MENOR -> " + image);
+         break;
+      case 88 :
+        image.append(jjstrLiteralImages[88]);
+        lengthOfMatch = jjstrLiteralImages[88].length();
+                      System.out.println("MAYOR -> " + image);
+         break;
+      case 89 :
+        image.append(jjstrLiteralImages[89]);
+        lengthOfMatch = jjstrLiteralImages[89].length();
+                                 System.out.println("MENOR_IGUAL_QUE -> " + image);
+         break;
+      case 90 :
+        image.append(jjstrLiteralImages[90]);
+        lengthOfMatch = jjstrLiteralImages[90].length();
+                                 System.out.println("MAYOR_IGUAL_QUE -> " + image);
+         break;
+      case 91 :
+        image.append(jjstrLiteralImages[91]);
+        lengthOfMatch = jjstrLiteralImages[91].length();
+                                    System.out.println("IGUALDAD_ESTRICTA -> " + image);
+         break;
+      case 92 :
+        image.append(jjstrLiteralImages[92]);
+        lengthOfMatch = jjstrLiteralImages[92].length();
+                                       System.out.println("DESIGUALDAD_ESTRICTA -> " + image);
+         break;
+      case 93 :
+        image.append(jjstrLiteralImages[93]);
+        lengthOfMatch = jjstrLiteralImages[93].length();
+                            System.out.println("AND_LOGICO -> " + image);
+         break;
+      case 94 :
+        image.append(jjstrLiteralImages[94]);
+        lengthOfMatch = jjstrLiteralImages[94].length();
+                           System.out.println("OR_LOGICO -> " + image);
+         break;
+      case 95 :
+        image.append(jjstrLiteralImages[95]);
+        lengthOfMatch = jjstrLiteralImages[95].length();
+                           System.out.println("NOT_LOGICO -> " + image);
+         break;
+      case 96 :
+        image.append(jjstrLiteralImages[96]);
+        lengthOfMatch = jjstrLiteralImages[96].length();
+                        System.out.println("AND_BIT -> " + image);
+         break;
+      case 97 :
+        image.append(jjstrLiteralImages[97]);
+        lengthOfMatch = jjstrLiteralImages[97].length();
+                       System.out.println("OR_BIT -> " + image);
+         break;
+      case 98 :
+        image.append(jjstrLiteralImages[98]);
+        lengthOfMatch = jjstrLiteralImages[98].length();
+                        System.out.println("XOR_BIT -> " + image);
+         break;
+      case 99 :
+        image.append(jjstrLiteralImages[99]);
+        lengthOfMatch = jjstrLiteralImages[99].length();
+                        System.out.println("NOT_BIT -> " + image);
+         break;
+      case 100 :
+        image.append(jjstrLiteralImages[100]);
+        lengthOfMatch = jjstrLiteralImages[100].length();
+                            System.out.println("INCREMENTO -> " + image);
+         break;
+      case 101 :
+        image.append(jjstrLiteralImages[101]);
+        lengthOfMatch = jjstrLiteralImages[101].length();
+                            System.out.println("DECREMENTO -> " + image);
          break;
       default :
          break;
