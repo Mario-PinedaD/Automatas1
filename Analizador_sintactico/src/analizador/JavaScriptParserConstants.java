@@ -72,135 +72,137 @@ public interface JavaScriptParserConstants {
   /** RegularExpression Id. */
   int NULL = 36;
   /** RegularExpression Id. */
-  int PACKAGE = 37;
+  int OF = 37;
   /** RegularExpression Id. */
-  int PRIVATE = 38;
+  int PACKAGE = 38;
   /** RegularExpression Id. */
-  int PROTECTED = 39;
+  int PRIVATE = 39;
   /** RegularExpression Id. */
-  int PUBLIC = 40;
+  int PROTECTED = 40;
   /** RegularExpression Id. */
-  int RETURN = 41;
+  int PUBLIC = 41;
   /** RegularExpression Id. */
-  int SUPER = 42;
+  int RETURN = 42;
   /** RegularExpression Id. */
-  int SWITCH = 43;
+  int SUPER = 43;
   /** RegularExpression Id. */
-  int STATIC = 44;
+  int SWITCH = 44;
   /** RegularExpression Id. */
-  int THIS = 45;
+  int STATIC = 45;
   /** RegularExpression Id. */
-  int THROW = 46;
+  int THIS = 46;
   /** RegularExpression Id. */
-  int TRY = 47;
+  int THROW = 47;
   /** RegularExpression Id. */
-  int TYPEOF = 48;
+  int TRY = 48;
   /** RegularExpression Id. */
-  int TRUE = 49;
+  int TYPEOF = 49;
   /** RegularExpression Id. */
-  int VAR = 50;
+  int TRUE = 50;
   /** RegularExpression Id. */
-  int VOID = 51;
+  int VAR = 51;
   /** RegularExpression Id. */
-  int WHILE = 52;
+  int VOID = 52;
   /** RegularExpression Id. */
-  int WITH = 53;
+  int WHILE = 53;
   /** RegularExpression Id. */
-  int YIELD = 54;
+  int WITH = 54;
   /** RegularExpression Id. */
-  int IDENTIFICADOR = 55;
+  int YIELD = 55;
   /** RegularExpression Id. */
-  int INT = 56;
+  int IDENTIFICADOR = 56;
   /** RegularExpression Id. */
-  int FLOAT = 57;
+  int INT = 57;
   /** RegularExpression Id. */
-  int STRING = 58;
+  int FLOAT = 58;
   /** RegularExpression Id. */
-  int PARENTESIS_I = 59;
+  int STRING = 59;
   /** RegularExpression Id. */
-  int PARENTESIS_D = 60;
+  int PARENTESIS_I = 60;
   /** RegularExpression Id. */
-  int LLAVE_IZQ = 61;
+  int PARENTESIS_D = 61;
   /** RegularExpression Id. */
-  int LLAVE_DER = 62;
+  int LLAVE_IZQ = 62;
   /** RegularExpression Id. */
-  int CORCHETE_IZQ = 63;
+  int LLAVE_DER = 63;
   /** RegularExpression Id. */
-  int CORCHETE_DER = 64;
+  int CORCHETE_IZQ = 64;
   /** RegularExpression Id. */
-  int PUNTO_Y_COMA = 65;
+  int CORCHETE_DER = 65;
   /** RegularExpression Id. */
-  int DOS_PUNTOS = 66;
+  int PUNTO_Y_COMA = 66;
   /** RegularExpression Id. */
-  int COMA = 67;
+  int DOS_PUNTOS = 67;
   /** RegularExpression Id. */
-  int PUNTO = 68;
+  int COMA = 68;
   /** RegularExpression Id. */
-  int MAS = 69;
+  int PUNTO = 69;
   /** RegularExpression Id. */
-  int MENOS = 70;
+  int MAS = 70;
   /** RegularExpression Id. */
-  int MULT = 71;
+  int MENOS = 71;
   /** RegularExpression Id. */
-  int DIV = 72;
+  int MULT = 72;
   /** RegularExpression Id. */
-  int MOD = 73;
+  int DIV = 73;
   /** RegularExpression Id. */
-  int IGUAL = 74;
+  int MOD = 74;
   /** RegularExpression Id. */
-  int EXPONENCIAL = 75;
+  int IGUAL = 75;
   /** RegularExpression Id. */
-  int A_SUMA = 76;
+  int EXPONENCIAL = 76;
   /** RegularExpression Id. */
-  int A_RESTA = 77;
+  int A_SUMA = 77;
   /** RegularExpression Id. */
-  int A_MULTIPLICACION = 78;
+  int A_RESTA = 78;
   /** RegularExpression Id. */
-  int A_DIVISION = 79;
+  int A_MULTIPLICACION = 79;
   /** RegularExpression Id. */
-  int A_MODULO = 80;
+  int A_DIVISION = 80;
   /** RegularExpression Id. */
-  int A_EXPONENCIACION = 81;
+  int A_MODULO = 81;
   /** RegularExpression Id. */
-  int A_AND = 82;
+  int A_EXPONENCIACION = 82;
   /** RegularExpression Id. */
-  int A_OR = 83;
+  int A_AND = 83;
   /** RegularExpression Id. */
-  int A_XOR = 84;
+  int A_OR = 84;
   /** RegularExpression Id. */
-  int ES_IGUAL = 85;
+  int A_XOR = 85;
   /** RegularExpression Id. */
-  int NO_ES_IGUAL = 86;
+  int ES_IGUAL = 86;
   /** RegularExpression Id. */
-  int MENOR = 87;
+  int NO_ES_IGUAL = 87;
   /** RegularExpression Id. */
-  int MAYOR = 88;
+  int MENOR = 88;
   /** RegularExpression Id. */
-  int MENOR_IGUAL_QUE = 89;
+  int MAYOR = 89;
   /** RegularExpression Id. */
-  int MAYOR_IGUAL_QUE = 90;
+  int MENOR_IGUAL_QUE = 90;
   /** RegularExpression Id. */
-  int IGUALDAD_ESTRICTA = 91;
+  int MAYOR_IGUAL_QUE = 91;
   /** RegularExpression Id. */
-  int DESIGUALDAD_ESTRICTA = 92;
+  int IGUALDAD_ESTRICTA = 92;
   /** RegularExpression Id. */
-  int AND_LOGICO = 93;
+  int DESIGUALDAD_ESTRICTA = 93;
   /** RegularExpression Id. */
-  int OR_LOGICO = 94;
+  int AND_LOGICO = 94;
   /** RegularExpression Id. */
-  int NOT_LOGICO = 95;
+  int OR_LOGICO = 95;
   /** RegularExpression Id. */
-  int AND_BIT = 96;
+  int NOT_LOGICO = 96;
   /** RegularExpression Id. */
-  int OR_BIT = 97;
+  int AND_BIT = 97;
   /** RegularExpression Id. */
-  int XOR_BIT = 98;
+  int OR_BIT = 98;
   /** RegularExpression Id. */
-  int NOT_BIT = 99;
+  int XOR_BIT = 99;
   /** RegularExpression Id. */
-  int INCREMENTO = 100;
+  int NOT_BIT = 100;
   /** RegularExpression Id. */
-  int DECREMENTO = 101;
+  int INCREMENTO = 101;
+  /** RegularExpression Id. */
+  int DECREMENTO = 102;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -244,6 +246,7 @@ public interface JavaScriptParserConstants {
     "\"log\"",
     "\"new\"",
     "\"null\"",
+    "\"OFF\"",
     "\"package\"",
     "\"private\"",
     "\"protected\"",

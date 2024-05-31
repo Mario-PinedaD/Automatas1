@@ -36,7 +36,7 @@ TOKEN : {
   | < CONST: "const" >          {System.out.println("CONST -> " + image );}
   | < CONTINUE: "continue" >    {System.out.println("CONTINUE -> " + image );}
   | < DEBUGGER: "debugger" >    {System.out.println("DEBUGGER -> " + image );}
-  | < DEFAUL: "default" >   {System.out.println("DEFAULT -> " + image );}
+  | < DEFAUL: "default" >       {System.out.println("DEFAULT -> " + image );}
   | < DELETE: "delete" >        {System.out.println("DELETE -> " + image );}
   | < DO: "do" >                {System.out.println("DO -> " + image );}
   | < ELSE: "else" >            {System.out.println("ELSE -> " + image );}
@@ -57,6 +57,7 @@ TOKEN : {
   | < LOG: "log" >              {System.out.println("LOG -> " + image );}
   | < NEW: "new" >              {System.out.println("NEW -> " + image );}
   | < NULL: "null" >            {System.out.println("NULL -> " + image );}
+  | < OF : "OFF">               {System.out.println("OF -> " + image);}
   | < PACKAGE: "package" >      {System.out.println("PACKAGE -> " + image );}
   | < PRIVATE: "private" >      {System.out.println("PRIVATE -> " + image );}
   | < PROTECTED: "protected" >  {System.out.println("PROTECTED -> " + image );}
@@ -141,30 +142,44 @@ void Statement() :{} {
   | IfStatement()
   | WhileStatement()
   | ForStatement()
-  | ReturnStatement()       //Retorno de algo (no confundir con la impresion)
+  | ReturnStatement()
   | ExpressionStatement()
-  | FunctionStatement()     //Declaracion de una funcion
-  | ConsoleStatement()      //Declaracion de imprimir
+  | VariableAsignation()
+  | FunctionStatement()
+  | ConsoleStatement()
   | SwitchStatement()
   | BreakStatement()
+  | ArrayCall()
 }
 
 void VariableStatement() : {} {
-  (<VAR> | <LET> | <CONST>) <IDENTIFICADOR> ( <IGUAL> (LlamarFuncion() | DatosCompletos() ) )? <PUNTO_Y_COMA>
+  (<VAR> | <LET> | <CONST>) <IDENTIFICADOR> ( <IGUAL> ( LlamarFuncion() | DatosCompletos() | ArrayCreate() |VariableMultiple() | VariableAsignation() ) )? <PUNTO_Y_COMA>
 }
 
-//Debo considerar el hecho de que, se puedan declarar varias funciones en un solo método,
+void VariableAsignation() : {} {
+    <IDENTIFICADOR> ( <IGUAL> <IDENTIFICADOR> )* <IGUAL> [ DatosCompletos() ] [<PUNTO_Y_COMA>]
+}
 
+void VariableMultiple() : {} {
+    <IDENTIFICADOR> ( <COMA> <IDENTIFICADOR> )* <PUNTO_Y_COMA>
+}
 
 //Un metodo que devuelve una "funcion" únicamente para guardarlo en una variable
 void LlamarFuncion() : {} {
     <IDENTIFICADOR> <PARENTESIS_I> ParameterList() <PARENTESIS_D>
 }
 
-
 //Pa que chambee el console.log
 void ConsoleStatement() : {} {
-    <CONSOLE> <PUNTO> <LOG> <PARENTESIS_I> Contenido() <PARENTESIS_D> <PUNTO_Y_COMA>
+    <CONSOLE> <PUNTO> <LOG> <PARENTESIS_I> ( Contenido() | ArrayCreate() )<PARENTESIS_D> <PUNTO_Y_COMA>
+}
+
+void ArrayCreate() : {} {
+    //<CORCHETE_IZQ> [DatosCompletos()] ( Concatenation() )* <CORCHETE_DER>
+    <CORCHETE_IZQ>
+        ( ( [DatosCompletos()] ( Concatenation() )* )
+        | <IDENTIFICADOR>  )
+    <CORCHETE_DER>
 }
 
 void FunctionStatement() : {} {
@@ -190,7 +205,6 @@ void WhileStatement() : {} {
 void ForStatement() : {} {
   <FOR> <PARENTESIS_I> ( VariableStatement() | [Expression()] <PUNTO_Y_COMA> ) [Expression()] <PUNTO_Y_COMA> [Expression()] <PARENTESIS_D> Bloque() //Checar si cambiar por Bloque()
 }
-
 void SwitchStatement() : {} {
     <SWITCH> <PARENTESIS_I> (Expression() | Booleano() ) <PARENTESIS_D> <LLAVE_IZQ> (CaseClause())* (DefaultClause())? <LLAVE_DER>
 }
@@ -213,11 +227,16 @@ void ReturnStatement() : {} {
 
 //El contenido del console.log
 void Contenido() : {} {
-    (DatosBasicos() | Concatenation())*
+    //(DatosBasicos() | Concatenation())* | ArrayCall()
+    (DatosBasicos() | Concatenation() | ArrayCall())*
+//    [ (DatosCompletos() ( Concatenation() )*) ]
+//    | ( <IDENTIFICADOR> ArrayCreate() )
 }
 
 void Concatenation() : {} {
-    (<COMA> DatosBasicos()) | ( <MAS> DatosBasicos() )
+      ( <COMA> DatosCompletos() )
+    | ( <MAS> (DatosCompletos()
+      | <IDENTIFICADOR> ArrayCreate() ) )
 }
 void ExpressionStatement() : {} {
   Expression() <PUNTO_Y_COMA>
@@ -233,6 +252,10 @@ void AssignmentExpression() : {} {
 
 void ConditionalExpression() : {} {
   OrExpression()
+}
+
+void ArrayCall() : {} {
+    <IDENTIFICADOR> <CORCHETE_IZQ> (  DatosCompletos()  | (DatosCompletos() (Concatenation() )* ) ) <CORCHETE_DER> <PUNTO_Y_COMA>
 }
 
 void OrExpression() : {} {
@@ -279,7 +302,10 @@ void PrimaryExpression() : {} {
 }
 
 void DatosCompletos(): {} {
-    DatosBasicos() | <TRUE> | <FALSE>
+    DatosBasicos()
+    | ArrayCall()
+    | <TRUE>
+    | <FALSE>
 }
 void Booleano() : {} {
     <TRUE> | <FALSE>
